@@ -38,12 +38,6 @@
             --shadow-medium: rgba(0, 0, 0, 0.12);
             --highlight-bg: yellow;
             --highlight-text: black;
-            --sidebar-bg: #f0f0f0; /* Kept for theme consistency, though sidebar removed */
-            --sidebar-border: rgba(0, 0, 0, 0.1); /* Kept for theme consistency */
-            --thread-item-hover: #e0e0e0; /* Kept for theme consistency */
-            --thread-item-active: #d0d0d0; /* Kept for theme consistency */
-            --modal-bg: rgba(0, 0, 0, 0.5);
-            --modal-content-bg: #ffffff;
         }
 
         .dark-mode {
@@ -70,12 +64,6 @@
             --shadow-medium: rgba(0, 0, 0, 0.4);
             --highlight-bg: yellow;
             --highlight-text: black;
-            --sidebar-bg: #2d3748; /* Kept for theme consistency, though sidebar removed */
-            --sidebar-border: rgba(255, 255, 255, 0.15); /* Kept for theme consistency */
-            --thread-item-hover: #3a475d; /* Kept for theme consistency */
-            --thread-item-active: #4a5a75; /* Kept for theme consistency */
-            --modal-bg: rgba(0, 0, 0, 0.7);
-            --modal-content-bg: #1e293b;
         }
 
         /* Apply variables */
@@ -98,7 +86,6 @@
             display: flex;
             flex-direction: column;
             margin: 0 auto;
-            position: relative; /* Needed for sidebar positioning */
         }
 
         /* Sticky Header */
@@ -338,146 +325,6 @@
             border-radius: 4px;
         }
 
-        /* Login Modal */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--modal-bg);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 50;
-            transition: opacity 0.3s ease;
-        }
-
-        .modal-content {
-            background-color: var(--modal-content-bg);
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px var(--shadow-medium);
-            max-width: 500px;
-            width: 90%;
-            position: relative;
-            text-align: center;
-            color: var(--text-color);
-        }
-
-        .modal-close-button {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: var(--text-color);
-        }
-
-        .auth-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.2s ease, transform 0.1s ease;
-        }
-
-        .auth-button:hover {
-            transform: translateY(-2px);
-        }
-
-        .auth-button.google {
-            background-color: #4285F4;
-            color: white;
-        }
-        .auth-button.google:hover {
-            background-color: #357ae8;
-        }
-
-        .auth-button.email, .auth-button.phone {
-            background-color: #1e88e5;
-            color: white;
-        }
-        .auth-button.email:hover, .auth-button.phone:hover {
-            background-color: #1a7bbd;
-        }
-
-        .modal-content input[type="email"],
-        .modal-content input[type="password"],
-        .modal-content input[type="tel"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid var(--input-border);
-            border-radius: 8px;
-            background-color: var(--input-bg);
-            color: var(--text-color);
-        }
-        .modal-content input::placeholder {
-            color: var(--placeholder-color);
-        }
-
-        .modal-content button[type="submit"] {
-            background-color: var(--button-primary-bg);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            width: 100%;
-            transition: background-color 0.2s ease;
-        }
-        .modal-content button[type="submit"]:hover {
-            background-color: var(--button-primary-hover);
-        }
-
-        .modal-error-message {
-            color: #ef4444;
-            margin-top: 10px;
-            font-size: 14px;
-        }
-
-        /* Disable input area when guest limit reached */
-        .input-area.pointer-events-none {
-            pointer-events: none;
-        }
-        .input-area.opacity-50 {
-            opacity: 0.5;
-        }
-
-        /* Message Limit Modal */
-        #messageLimitModal .modal-content {
-            background-color: var(--modal-content-bg);
-            border: 1px solid var(--border-color);
-            padding: 40px; /* Increased padding */
-            font-size: 1.1em; /* Slightly larger text */
-            text-align: center;
-        }
-        #messageLimitModal h2 {
-            font-size: 1.8em; /* Larger heading */
-            margin-bottom: 20px;
-            color: var(--text-color);
-        }
-        #messageLimitModal p {
-            margin-bottom: 30px;
-            color: var(--text-color);
-        }
-        #messageLimitModal .auth-options {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-
         /* Responsive Design */
         @media (max-width: 768px) {
             .main-container {
@@ -537,24 +384,14 @@
         <!-- Sticky Header -->
         <header class="header">
             <div class="flex items-center justify-between">
-                <div class="flex items-center gap-4">
-                    <!-- Removed: Sidebar Toggle Button -->
+                <div class="flex items-center">
                     <div class="logo">
                         Shubham <span class="gpt-text">GPT</span>
                     </div>
                 </div>
-                <div class="flex items-center gap-3">
-                    <button id="themeToggleBtn" class="theme-toggle">
-                        🌙 Dark
-                    </button>
-                    <!-- Login Button -->
-                    <button id="loginButton" class="theme-toggle px-4 py-2 hidden">Login</button>
-                    <!-- User Avatar / Logout Option (Hidden by default) -->
-                    <div id="userAvatar" class="relative hidden">
-                        <!-- Avatar will be dynamically loaded -->
-                    </div>
-                    <button id="logoutButton" class="theme-toggle px-4 py-2 hidden">Logout</button>
-                </div>
+                <button id="themeToggleBtn" class="theme-toggle">
+                    🌙 Dark
+                </button>
             </div>
         </header>
 
@@ -593,89 +430,7 @@
         </div>
     </div>
 
-    <!-- Login/Signup Modal -->
-    <div id="loginModal" class="modal-overlay hidden">
-        <div class="modal-content">
-            <button id="closeModalBtn" class="modal-close-button">x</button>
-            <h2 class="text-2xl font-bold mb-6">Sign In / Sign Up</h2>
-
-            <button id="googleSignInBtn" class="auth-button google">
-                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google icon" class="w-5 h-5">
-                Sign in with Google
-            </button>
-
-            <form id="emailSignInForm" class="mt-4">
-                <p class="text-center my-4 opacity-70">Or use Email & Password</p>
-                <input type="email" id="emailInput" placeholder="Email" required class="w-full">
-                <input type="password" id="passwordInput" placeholder="Password" required class="w-full">
-                <button type="submit" class="w-full mt-2">Sign In / Sign Up</button>
-            </form>
-
-            <div class="text-center my-4 opacity-70">Or use Phone Number</div>
-            <form id="phoneSignInForm">
-                <input type="tel" id="phoneNumberInput" placeholder="e.g., +1234567890" required class="w-full">
-                <div id="recaptcha-container" class="mt-4"></div>
-                <button type="button" id="phoneSignInBtn" class="w-full mt-2">Send OTP</button>
-            </form>
-            <form id="verifyOtpForm" class="mt-4 hidden">
-                <input type="text" id="verificationCodeInput" placeholder="Verification Code" required class="w-full">
-                <button type="button" id="verifyOtpBtn" class="w-full mt-2">Verify OTP</button>
-            </form>
-            <p id="loginErrorMessage" class="modal-error-message hidden"></p>
-        </div>
-    </div>
-
-    <!-- Message Limit Modal (Hidden by default) -->
-    <div id="messageLimitModal" class="modal-overlay hidden">
-        <div class="modal-content">
-            <button id="messageLimitModalClose" class="modal-close-button">x</button>
-            <h2 class="font-bold mb-4">To continue using Shubham GPT, please sign in</h2>
-            <p class="mb-6 opacity-80">You've reached your message limit as a guest. Please log in to unlock unlimited conversations and save your chat history.</p>
-            <div class="auth-options">
-                <button id="googleSignInBtnModal" class="auth-button google">
-                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google icon" class="w-5 h-5">
-                    Sign in with Google
-                </button>
-                <button id="emailSignInBtnModal" class="auth-button email">
-                    <span class="material-icons">email</span>
-                    Sign in with Email
-                </button>
-                <button id="phoneSignInBtnModal" class="auth-button phone">
-                    <span class="material-icons">phone</span>
-                    Sign in with Phone
-                </button>
-            </div>
-        </div>
-    </div>
-
-
     <script type="module">
-        // Firebase SDK Setup (Provided by user)
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-analytics.js";
-
-        // Firebase Authentication and Firestore Imports
-        import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, RecaptchaVerifier, signInWithPhoneNumber, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
-        // Removed Firestore imports as chat history is no longer persisted
-        // import { getFirestore, collection, doc, addDoc, getDoc, updateDoc, query, orderBy, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyDT9qA2dQnwKQAIDBZaW4MfuQHzguQX6TY",
-            authDomain: "subham-gpt.firebaseapp.com",
-            projectId: "subham-gpt",
-            storageBucket: "subham-gpt.firebasestorage.app",
-            messagingSenderId: "447950286722",
-            appId: "1:447950286722:web:b8197211d2d5851ee0699b",
-            measurementId: "G-3SSC49EL2R"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        getAnalytics(app); // Initialize Analytics, though not directly used in this logic
-
-        const auth = getAuth(app);
-        // Removed Firestore initialization as chat history is no longer persisted
-        // const db = getFirestore(app);
-
         // Get references to HTML elements
         const userInput = document.getElementById('userInput');
         const sendButton = document.getElementById('sendButton');
@@ -684,50 +439,13 @@
         const chatHistoryDiv = document.getElementById('chatHistory');
         const loadingIndicator = document.getElementById('loadingIndicator');
 
-        // UI elements for login/chat management
-        const loginButton = document.getElementById('loginButton');
-        const logoutButton = document.getElementById('logoutButton');
-        const userAvatarDiv = document.getElementById('userAvatar');
-        const loginModal = document.getElementById('loginModal');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        const googleSignInBtn = document.getElementById('googleSignInBtn');
-        const emailSignInForm = document.getElementById('emailSignInForm');
-        const emailInput = document.getElementById('emailInput');
-        const passwordInput = document.getElementById('passwordInput');
-        const phoneSignInForm = document.getElementById('phoneSignInForm');
-        const phoneNumberInput = document.getElementById('phoneNumberInput');
-        const phoneSignInBtn = document.getElementById('phoneSignInBtn');
-        const verificationCodeInput = document.getElementById('verificationCodeInput');
-        const verifyOtpForm = document.getElementById('verifyOtpForm');
-        const verifyOtpBtn = document.getElementById('verifyOtpBtn');
-        const loginErrorMessage = document.getElementById('loginErrorMessage');
-        const messageInputArea = document.querySelector('.input-area');
-        const messageLimitModal = document.getElementById('messageLimitModal');
-        const messageLimitModalClose = document.getElementById('messageLimitModalClose');
-        const googleSignInBtnModal = document.getElementById('googleSignInBtnModal');
-        const emailSignInBtnModal = document.getElementById('emailSignInBtnModal');
-        const phoneSignInBtnModal = document.getElementById('phoneSignInBtnModal');
-        // Removed references to chat history and new chat UI elements
-        // const newChatButton = document.getElementById('newChatButton');
-        // const chatHistorySidebar = document.getElementById('chatHistorySidebar');
-        // const toggleSidebarBtn = document.getElementById('toggleSidebarBtn');
-        // const closeSidebarBtn = document.getElementById('closeSidebarBtn');
-        // const chatThreadsList = document.getElementById('chatThreadsList');
-
-        // Store chat history in an array for the active session only
+        // Store chat history in an array
         let chatHistory = [];
         let abortController = null;
         let isDarkMode = false;
         let isResponding = false;
-        let currentUser = null; // Will store Firebase User object
-        let guestMessageCount = 0;
-        const MAX_GUEST_MESSAGES = 2;
-        // Removed activeChatThreadId and userChatThreads as history persistence is removed
-        // let activeChatThreadId = null;
-        // let userChatThreads = [];
-        let confirmationResult = null; // For phone auth OTP
 
-        // HARDCODED API KEY FOR IMMEDIATE FIX (as provided in original code)
+        // HARDCODED API KEY FOR IMMEDIATE FIX
         const API_KEY = "AIzaSyDRp4pUWF7PJ-olOWnDu76v-S1HO3FvxGM";
 
         // Function to swap between send and stop buttons
@@ -779,7 +497,7 @@
                         // Get current text and apply formatting
                         const currentText = text.substring(0, i + 1);
                         const beforeCursor = element.querySelector('.blinking-cursor');
-                        if (beforeCursor) element.removeChild(beforeCursor); // Ensure cursor exists before removal
+                        element.removeChild(beforeCursor);
                         element.innerHTML = applyRealtimeFormatting(currentText);
                         element.appendChild(cursorSpan);
                         i++;
@@ -814,10 +532,7 @@
         // Function to render all messages from chatHistory array
         const renderChatHistory = async () => {
             chatHistoryDiv.innerHTML = '';
-            // Initial welcome message only if no chat history is loaded
-            if (chatHistory.length === 0) {
-                 await addMessageToChat('bot', 'Hello! 👋 How can I help you today?');
-            }
+            await addMessageToChat('bot', 'Hello! 👋 How can I help you today?');
 
             for (const chat of chatHistory) {
                 const userMsgWrapper = document.createElement('div');
@@ -829,8 +544,7 @@
 
                 const botMsgWrapper = document.createElement('div');
                 botMsgWrapper.className = `message-bubble bot-message`;
-                // Use botFormatted if available, otherwise raw
-                botMsgWrapper.innerHTML = chat.botFormatted || applyRealtimeFormatting(chat.botRaw);
+                botMsgWrapper.innerHTML = chat.botFormatted;
                 chatHistoryDiv.appendChild(botMsgWrapper);
                 botMsgWrapper.style.opacity = 1;
                 botMsgWrapper.style.transform = 'translateY(0)';
@@ -838,205 +552,14 @@
             chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight;
         };
 
-        // Function to show error message in modal
-        const showLoginError = (message) => {
-            loginErrorMessage.textContent = message;
-            loginErrorMessage.classList.remove('hidden');
-        };
-
-        const hideLoginError = () => {
-            loginErrorMessage.classList.add('hidden');
-            loginErrorMessage.textContent = '';
-        };
-
-        // --- Firebase Auth Logic ---
-
-        // Google Sign-In
-        googleSignInBtn.addEventListener('click', async () => {
-            const provider = new GoogleAuthProvider();
-            try {
-                await signInWithPopup(auth, provider);
-                loginModal.classList.add('hidden');
-                hideLoginError();
-            } catch (error) {
-                console.error("Error signing in with Google:", error);
-                showLoginError(`Google sign-in failed: ${error.message}`);
-            }
-        });
-
-        // Google Sign-In from message limit modal
-        googleSignInBtnModal.addEventListener('click', async () => {
-            const provider = new GoogleAuthProvider();
-            try {
-                await signInWithPopup(auth, provider);
-                messageLimitModal.classList.add('hidden');
-                hideLoginError();
-            } catch (error) {
-                console.error("Error signing in with Google:", error);
-                showLoginError(`Google sign-in failed: ${error.message}`);
-            }
-        });
-
-        // Email/Password Sign-In/Sign-Up
-        emailSignInForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            hideLoginError();
-            const email = emailInput.value;
-            const password = passwordInput.value;
-
-            try {
-                // Try to sign in first
-                await signInWithEmailAndPassword(auth, email, password);
-                loginModal.classList.add('hidden');
-            } catch (signInError) {
-                if (signInError.code === 'auth/user-not-found' || signInError.code === 'auth/wrong-password') {
-                    // If sign-in fails, try to create an account
-                    try {
-                        await createUserWithEmailAndPassword(auth, email, password);
-                        loginModal.classList.add('hidden');
-                    } catch (signUpError) {
-                        console.error("Error signing up with Email:", signUpError);
-                        showLoginError(`Email sign-up failed: ${signUpError.message}`);
-                    }
-                } else {
-                    console.error("Error signing in with Email:", signInError);
-                    showLoginError(`Email sign-in failed: ${signInError.message}`);
-                }
-            }
-        });
-
-        // Email Sign-In option from message limit modal
-        emailSignInBtnModal.addEventListener('click', () => {
-            messageLimitModal.classList.add('hidden');
-            loginModal.classList.remove('hidden');
-            // Hide phone forms, show email form
-            emailSignInForm.classList.remove('hidden');
-            phoneSignInForm.classList.add('hidden');
-            verifyOtpForm.classList.add('hidden');
-        });
-
-        // Phone Number Sign-In (OTP)
-        let recaptchaVerifier;
-        // Ensure reCAPTCHA is initialized when modal opens or component is mounted
-        loginModal.addEventListener('transitionend', (e) => {
-            if (!loginModal.classList.contains('hidden') && e.propertyName === 'opacity') {
-                if (!recaptchaVerifier) {
-                    recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-                        'size': 'invisible', // Can be 'normal' or 'invisible'
-                        'callback': (response) => {
-                            // reCAPTCHA solved, allow signInWithPhoneNumber.
-                            // Not strictly needed for invisible recaptcha, but good for debugging.
-                            console.log('Recaptcha verified:', response);
-                        },
-                        'expired-callback': () => {
-                            showLoginError('reCAPTCHA expired. Please try again.');
-                        }
-                    });
-                }
-            }
-        });
-
-        phoneSignInBtn.addEventListener('click', async () => {
-            hideLoginError();
-            const phoneNumber = phoneNumberInput.value;
-            if (!phoneNumber) {
-                showLoginError('Please enter a phone number.');
-                return;
-            }
-
-            try {
-                // This will render the reCAPTCHA if not invisible and try to send OTP
-                confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
-                phoneSignInForm.classList.add('hidden');
-                verifyOtpForm.classList.remove('hidden');
-                showLoginError('OTP sent successfully!'); // Success message for OTP
-            } catch (error) {
-                console.error("Error sending OTP:", error);
-                showLoginError(`Failed to send OTP: ${error.message}`);
-                // Reset reCAPTCHA if there's an error
-                if (recaptchaVerifier) recaptchaVerifier.render().then(function(widgetId) { grecaptcha.reset(widgetId); });
-            }
-        });
-
-        verifyOtpBtn.addEventListener('click', async () => {
-            hideLoginError();
-            const code = verificationCodeInput.value;
-            if (!code) {
-                showLoginError('Please enter the verification code.');
-                return;
-            }
-            if (!confirmationResult) {
-                showLoginError('Something went wrong. Please try sending OTP again.');
-                return;
-            }
-
-            try {
-                await confirmationResult.confirm(code);
-                loginModal.classList.add('hidden');
-                verifyOtpForm.classList.add('hidden');
-                phoneSignInForm.classList.remove('hidden'); // Reset form for next use
-                phoneNumberInput.value = '';
-                verificationCodeInput.value = '';
-            } catch (error) {
-                console.error("Error verifying OTP:", error);
-                showLoginError(`Failed to verify code: ${error.message}`);
-            }
-        });
-
-        // Phone Sign-In option from message limit modal
-        phoneSignInBtnModal.addEventListener('click', () => {
-            messageLimitModal.classList.add('hidden');
-            loginModal.classList.remove('hidden');
-            // Hide email form, show phone form
-            emailSignInForm.classList.add('hidden');
-            phoneSignInForm.classList.remove('hidden');
-            verifyOtpForm.classList.add('hidden');
-        });
-
-        // Logout
-        logoutButton.addEventListener('click', async () => {
-            try {
-                await signOut(auth);
-                // Auth state listener will handle UI updates
-                addMessageToChat('bot', 'You have been logged out. Chat history cleared.');
-                // Removed history-related variable resets
-                chatHistory = []; // Clear current session chat history
-                renderChatHistory(); // Render initial welcome message
-                localStorage.setItem('guestMessageCount', '0'); // Reset guest count
-                guestMessageCount = 0;
-            } catch (error) {
-                console.error("Error signing out:", error);
-                addMessageToChat('bot', 'Error logging out. Please try again.');
-            }
-        });
-
-        // --- No longer persist chat history to Firestore ---
-        // Removed Firebase Firestore Chat Management functions:
-        // saveChatThread, loadChatThreads, loadChatThreadMessages, startNewChat, renderChatThreadsSidebar
-
-        // --- Event Listeners and Initial Setup ---
-
-        // Main send button event listener
+        // Event listener for the send button
         sendButton.addEventListener('click', async () => {
             if (isResponding) return; // Prevent multiple requests
-
+            
             const prompt = userInput.value.trim();
             if (!prompt) {
                 await addMessageToChat('bot', 'Please enter your question before submitting.');
                 return;
-            }
-
-            // Guest message limit check
-            if (!currentUser) {
-                guestMessageCount++;
-                localStorage.setItem('guestMessageCount', guestMessageCount.toString());
-                if (guestMessageCount >= MAX_GUEST_MESSAGES) {
-                    userInput.disabled = true;
-                    sendButton.disabled = true;
-                    messageInputArea.classList.add('pointer-events-none', 'opacity-50');
-                    messageLimitModal.classList.remove('hidden');
-                    return; // Stop further execution for guests
-                }
             }
 
             await addMessageToChat('user', prompt);
@@ -1052,16 +575,7 @@
 
             try {
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
-
-                // Prepare chat history for LLM API call (session-based only)
-                const formattedChatHistory = chatHistory.map(msg => ({
-                    role: msg.sender === 'user' ? 'user' : 'model', // Gemini API expects 'model' for bot
-                    parts: [{ text: msg.rawMessage || msg.user }] // Use raw message for bot, user for user
-                }));
-                // Add the current user's prompt as the last message for context
-                formattedChatHistory.push({ role: "user", parts: [{ text: prompt }] });
-
-                const payload = { contents: formattedChatHistory };
+                const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
 
                 const response = await fetch(apiUrl, {
                     method: 'POST',
@@ -1085,9 +599,7 @@
 
                 if (!signal.aborted) {
                     await addMessageToChat('bot', botRawResponseText);
-                    // Store messages with sender and raw/formatted content (session-based)
-                    chatHistory.push({ sender: 'user', user: prompt, rawMessage: prompt });
-                    chatHistory.push({ sender: 'bot', botRaw: botRawResponseText, botFormatted: applyRealtimeFormatting(botRawResponseText), rawMessage: botRawResponseText });
+                    chatHistory.push({ user: prompt, botRaw: botRawResponseText, botFormatted: applyRealtimeFormatting(botRawResponseText) });
                 }
 
             } catch (error) {
@@ -1100,7 +612,6 @@
                     console.error('Error fetching from Gemini API:', error);
                 }
             } finally {
-                // This correctly ensures the Send button shows after response completes or is aborted.
                 loadingIndicator.classList.add('hidden');
                 showSendButton(); // Always return to send button
                 abortController = null;
@@ -1130,107 +641,18 @@
             }
         });
 
-        // Enter key handling for user input
+        // Enter key handling
         userInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
-                if (!isResponding && !userInput.disabled) { // Only send if not currently responding and input is enabled
+                if (!isResponding) { // Only send if not currently responding
                     sendButton.click();
                 }
             }
         });
 
-        // Open Login Modal
-        loginButton.addEventListener('click', () => {
-            loginModal.classList.remove('hidden');
-            hideLoginError();
-            // Reset forms for fresh input
-            emailInput.value = '';
-            passwordInput.value = '';
-            phoneNumberInput.value = '';
-            verificationCodeInput.value = '';
-            emailSignInForm.classList.remove('hidden'); // Default to email form
-            phoneSignInForm.classList.add('hidden');
-            verifyOtpForm.classList.add('hidden');
-        });
-
-        // Close Login Modal
-        closeModalBtn.addEventListener('click', () => {
-            loginModal.classList.add('hidden');
-            hideLoginError();
-            // Reset reCAPTCHA if it was initialized
-            if (recaptchaVerifier) recaptchaVerifier.render().then(function(widgetId) { grecaptcha.reset(widgetId); });
-        });
-
-        // Close Message Limit Modal
-        messageLimitModalClose.addEventListener('click', () => {
-            messageLimitModal.classList.add('hidden');
-        });
-
-        // Removed New Chat Button event listener
-        // newChatButton.addEventListener('click', startNewChat);
-
-        // Removed Toggle Sidebar event listener
-        // toggleSidebarBtn.addEventListener('click', () => {
-        //     chatHistorySidebar.classList.toggle('open');
-        // });
-
-        // Removed Close Sidebar event listener
-        // closeSidebarBtn.addEventListener('click', () => {
-        //     chatHistorySidebar.classList.remove('open');
-        // });
-
-        // --- Initial Setup on DOM Load ---
-        document.addEventListener('DOMContentLoaded', () => {
-            // Check initial auth state
-            onAuthStateChanged(auth, async (user) => {
-                currentUser = user;
-                if (user) {
-                    // Logged in user
-                    loginButton.classList.add('hidden');
-                    userAvatarDiv.classList.remove('hidden');
-                    userAvatarDiv.innerHTML = `
-                        <img src="${user.photoURL || 'https://placehold.co/40x40/cccccc/000000?text=U'}" alt="User Avatar" class="w-10 h-10 rounded-full cursor-pointer">
-                        <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></span>
-                    `; // Added online indicator
-                    logoutButton.classList.remove('hidden');
-                    loginModal.classList.add('hidden'); // Hide any open login modal
-                    messageLimitModal.classList.add('hidden'); // Hide message limit modal
-                    userInput.disabled = false; // Enable input
-                    sendButton.disabled = false;
-                    messageInputArea.classList.remove('pointer-events-none', 'opacity-50'); // Ensure input is enabled
-
-                    // Removed sidebar and new chat button UI adjustments for logged-in users
-                    // toggleSidebarBtn.classList.remove('hidden');
-                    // chatHistorySidebar.classList.remove('hidden');
-                    // await loadChatThreads(user.uid); // Removed: Load user's chat threads
-
-                } else {
-                    // Guest user
-                    currentUser = null;
-                    loginButton.classList.remove('hidden');
-                    userAvatarDiv.classList.add('hidden');
-                    logoutButton.classList.add('hidden');
-                    // Removed sidebar UI adjustments for guest users
-                    // toggleSidebarBtn.classList.add('hidden');
-                    // chatHistorySidebar.classList.add('hidden');
-
-                    guestMessageCount = parseInt(localStorage.getItem('guestMessageCount') || '0');
-                    if (guestMessageCount >= MAX_GUEST_MESSAGES) {
-                        userInput.disabled = true; // Disable input
-                        sendButton.disabled = true;
-                        messageInputArea.classList.add('pointer-events-none', 'opacity-50'); // Visually disable
-                        messageLimitModal.classList.remove('hidden'); // Show message limit modal
-                    } else {
-                        userInput.disabled = false;
-                        sendButton.disabled = false;
-                        messageInputArea.classList.remove('pointer-events-none', 'opacity-50');
-                    }
-                    chatHistory = []; // Clear chat history for guests
-                    renderChatHistory(); // Render initial welcome message for guests
-                }
-            });
-        });
+        // Initial render
+        document.addEventListener('DOMContentLoaded', renderChatHistory);
     </script>
 </body>
 </html>
