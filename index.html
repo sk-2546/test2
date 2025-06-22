@@ -7,458 +7,1473 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* Custom CSS Variables for Professional Theming */
         :root {
-            --bg-color: #f4f7f9;
-            --sidebar-bg: #ffffff;
-            --chat-bg: #ffffff;
+            /* Light Mode Defaults - Professional, clean */
+            --bg-color: #f7f7f7;
+            --container-bg: #ffffff;
             --header-bg: #ffffff;
-            --border-color: #e5e7eb;
-            --text-primary: #111827;
-            --text-secondary: #6b7280;
-            --accent-color: #3b82f6;
-            --user-message-bg: #3b82f6;
-            --user-message-text: #ffffff;
-            --bot-message-bg: #f3f4f6;
-            --bot-message-text: #111827;
+            --border-color: rgba(0, 0, 0, 0.08);
+            --text-color: #333333;
+            --input-bg: #ffffff;
+            --input-border: rgba(0, 0, 0, 0.12);
+            --placeholder-color: #888888;
+            --bot-message-bg: #f1f1f1;
+            --user-message-bg: #1e88e5;
+            --user-message-text: white;
+            --loading-text: #666666;
+            --loading-dots: #1e88e5;
+            --button-primary-bg: #22c55e;
+            --button-primary-hover: #16a34a;
+            --button-stop-bg: #ef4444;
+            --button-stop-hover: #dc2626;
+            --button-toggle-bg: #f3f4f6;
+            --button-toggle-hover: #e5e7eb;
+            --shadow-light: rgba(0, 0, 0, 0.08);
+            --shadow-medium: rgba(0, 0, 0, 0.12);
+            --highlight-bg: yellow;
+            --highlight-text: black;
+            --sidebar-bg: #f0f0f0;
+            --sidebar-border: rgba(0, 0, 0, 0.1);
+            --thread-item-hover: #e0e0e0;
+            --thread-item-active: #d0d0d0;
+            --modal-bg: rgba(0, 0, 0, 0.5);
+            --modal-content-bg: #ffffff;
         }
+
+        .dark-mode {
+            --bg-color: #0f172a;
+            --container-bg: #1e293b;
+            --header-bg: #1e293b;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-color: #e2e8f0;
+            --input-bg: #334155;
+            --input-border: rgba(255, 255, 255, 0.2);
+            --placeholder-color: #94a3b8;
+            --bot-message-bg: #334155;
+            --user-message-bg: #1e88e5;
+            --user-message-text: white;
+            --loading-text: #94a3b8;
+            --loading-dots: #1e88e5;
+            --button-primary-bg: #22c55e;
+            --button-primary-hover: #16a34a;
+            --button-stop-bg: #ef4444;
+            --button-stop-hover: #dc2626;
+            --button-toggle-bg: #475569;
+            --button-toggle-hover: #64748b;
+            --shadow-light: rgba(0, 0, 0, 0.3);
+            --shadow-medium: rgba(0, 0, 0, 0.4);
+            --highlight-bg: yellow;
+            --highlight-text: black;
+            --sidebar-bg: #2d3748;
+            --sidebar-border: rgba(255, 255, 255, 0.15);
+            --thread-item-hover: #3a475d;
+            --thread-item-active: #4a5a75;
+            --modal-bg: rgba(0, 0, 0, 0.7);
+            --modal-content-bg: #1e293b;
+        }
+
+        /* Apply variables */
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-primary);
-            overflow: hidden;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            line-height: 1.6;
         }
-        .main-layout {
-            display: flex;
-            height: 100vh;
-        }
-        #sidebar {
-            width: 260px;
-            background-color: var(--sidebar-bg);
-            border-right: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            padding: 1rem;
-            transition: transform 0.3s ease;
-        }
-        @media (max-width: 768px) {
-            #sidebar {
-                position: absolute;
-                z-index: 40;
-                transform: translateX(-100%);
-            }
-            #sidebar.open {
-                transform: translateX(0);
-            }
-        }
-        #chat-container {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            background-color: var(--chat-bg);
-        }
-        .header {
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .chat-area {
-            flex-grow: 1;
-            overflow-y: auto;
-            padding: 1.5rem;
-        }
-        .input-area {
-            padding: 1rem 1.5rem;
-            border-top: 1px solid var(--border-color);
-        }
-        #userInput {
-            background-color: #f9fafb;
+
+        .main-container {
+            background-color: var(--container-bg);
             border: 1px solid var(--border-color);
-            border-radius: 0.5rem;
-            padding: 0.75rem 1rem;
-            font-size: 1rem;
+            box-shadow: 0 4px 6px -1px var(--shadow-light), 0 2px 4px -1px var(--shadow-medium);
+            transition: all 0.3s ease;
+            max-width: 720px;
             width: 100%;
-            resize: none;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0 auto;
+            position: relative; /* Needed for sidebar positioning */
         }
-        #userInput:focus {
-            outline: none;
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+
+        /* Sticky Header */
+        .header {
+            background-color: var(--header-bg);
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            padding: 16px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(10px);
         }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+
+        .logo .gpt-text {
+            font-weight: 400;
+            opacity: 0.7;
+        }
+
+        /* Scrollable Chat Area */
+        .chat-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .chat-area::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-area::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .chat-area::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+
+        .chat-area::-webkit-scrollbar-thumb:hover {
+            background: var(--placeholder-color);
+        }
+
+        /* Message Bubbles */
         .message-bubble {
-            max-width: 80%;
-            padding: 0.75rem 1rem;
-            border-radius: 0.75rem;
-            margin-bottom: 1rem;
+            margin-bottom: 20px;
             word-wrap: break-word;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInMessage 0.3s forwards;
+            font-size: 16px;
+            line-height: 1.6;
         }
+
         .user-message {
             background-color: var(--user-message-bg);
             color: var(--user-message-text);
             align-self: flex-end;
-            border-bottom-right-radius: 0.25rem;
-        }
-        .bot-message {
-            background-color: var(--bot-message-bg);
-            color: var(--bot-message-text);
-            align-self: flex-start;
-            border-bottom-left-radius: 0.25rem;
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 14px;
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 2px 4px var(--shadow-light);
         }
 
-        /* Login Modal */
-        #login-modal {
-            position: fixed;
-            inset: 0;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 50;
+        .bot-message {
+            color: var(--text-color);
+            align-self: flex-start;
+            width: 100%;
+            text-align: left;
+            background: none;
+            box-shadow: none;
+            padding: 0;
+            border-radius: 0;
+        }
+
+        /* Sticky Input Bar */
+        .input-area {
+            background-color: var(--container-bg);
+            border-top: 1px solid var(--border-color);
+            padding: 16px 20px;
+            position: sticky;
+            bottom: 0;
+            backdrop-filter: blur(10px);
+        }
+
+        #userInput {
+            background-color: var(--input-bg);
+            border: 1px solid var(--input-border);
+            color: var(--text-color);
+            font-size: 16px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            resize: none;
+            font-family: inherit;
+            line-height: 1.5;
+            box-shadow: 0 1px 3px var(--shadow-light);
+        }
+
+        #userInput:focus {
+            outline: none;
+            border-color: #1e88e5;
+            box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.1);
+        }
+
+        #userInput::placeholder {
+            color: var(--placeholder-color);
+        }
+
+        /* Button Container for Fixed Position */
+        .button-container {
+            position: relative;
+            min-width: 48px;
+            height: 48px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        .modal-content {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 0.75rem;
-            width: 100%;
-            max-width: 400px;
+
+        /* Send and Stop Buttons */
+        .action-button {
+            position: absolute;
+            background-color: var(--button-primary-bg);
+            color: white;
+            font-weight: 600;
+            font-size: 20px;
+            padding: 0;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px var(--shadow-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            opacity: 1;
+            transform: scale(1);
         }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        
-        .hidden { display: none !important; }
+
+        .action-button:hover {
+            background-color: var(--button-primary-hover);
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px var(--shadow-medium);
+        }
+
+        .action-button.stop-style {
+            background-color: var(--button-stop-bg);
+        }
+
+        .action-button.stop-style:hover {
+            background-color: var(--button-stop-hover);
+        }
+
+        /* Button transition animations */
+        .action-button.hidden {
+            opacity: 0;
+            transform: scale(0.8);
+            pointer-events: none;
+        }
+
+        /* Material Icons styling */
+        .material-icons {
+            font-size: 22px !important;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            background-color: var(--button-toggle-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--button-toggle-hover);
+        }
+
+        /* Loading Animation */
+        .loading-dots span {
+            animation: bounce 0.6s infinite alternate;
+            color: var(--loading-dots);
+        }
+
+        .loading-text {
+            color: var(--loading-text);
+            font-size: 14px;
+            margin-left: 8px;
+        }
+
+        /* Animations */
+        @keyframes fadeInMessage {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-8px); }
+        }
+
+        .blinking-cursor {
+            font-weight: 300;
+            animation: blink 1s step-end infinite;
+            border-right: 2px solid var(--text-color);
+        }
+
+        @keyframes blink {
+            from, to { border-right-color: transparent }
+            50% { border-right-color: var(--text-color); }
+        }
+
+        /* Text Formatting */
+        .highlight {
+            background-color: var(--highlight-bg);
+            color: var(--highlight-text);
+            font-weight: bold;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        /* New Chat Button */
+        #newChatButton {
+            background-color: var(--button-primary-bg);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 4px var(--shadow-light);
+            margin-top: 20px;
+        }
+
+        #newChatButton:hover {
+            background-color: var(--button-primary-hover);
+        }
+
+        /* Sidebar for Chat History */
+        .chat-history-sidebar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 300px; /* Adjust as needed */
+            height: 100%;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--sidebar-border);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-shadow: 2px 0 5px var(--shadow-medium);
+        }
+
+        .chat-history-sidebar.open {
+            transform: translateX(0);
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--sidebar-border);
+        }
+
+        .chat-threads-list {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 15px;
+        }
+
+        .chat-threads-list::-webkit-scrollbar {
+            width: 4px;
+        }
+        .chat-threads-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .chat-threads-list::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 2px;
+        }
+
+        .chat-thread-item {
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            color: var(--text-color);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .chat-thread-item:hover {
+            background-color: var(--thread-item-hover);
+        }
+
+        .chat-thread-item.active {
+            background-color: var(--thread-item-active);
+            font-weight: 500;
+        }
+
+        /* Login Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--modal-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-content {
+            background-color: var(--modal-content-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px var(--shadow-medium);
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            text-align: center;
+            color: var(--text-color);
+        }
+
+        .modal-close-button {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        .auth-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .auth-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .auth-button.google {
+            background-color: #4285F4;
+            color: white;
+        }
+        .auth-button.google:hover {
+            background-color: #357ae8;
+        }
+
+        .auth-button.email, .auth-button.phone {
+            background-color: #1e88e5;
+            color: white;
+        }
+        .auth-button.email:hover, .auth-button.phone:hover {
+            background-color: #1a7bbd;
+        }
+
+        .modal-content input[type="email"],
+        .modal-content input[type="password"],
+        .modal-content input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid var(--input-border);
+            border-radius: 8px;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+        }
+        .modal-content input::placeholder {
+            color: var(--placeholder-color);
+        }
+
+        .modal-content button[type="submit"] {
+            background-color: var(--button-primary-bg);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            transition: background-color 0.2s ease;
+        }
+        .modal-content button[type="submit"]:hover {
+            background-color: var(--button-primary-hover);
+        }
+
+        .modal-error-message {
+            color: #ef4444;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        /* Disable input area when guest limit reached */
+        .input-area.pointer-events-none {
+            pointer-events: none;
+        }
+        .input-area.opacity-50 {
+            opacity: 0.5;
+        }
+
+        /* Message Limit Modal */
+        #messageLimitModal .modal-content {
+            background-color: var(--modal-content-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px; /* Increased padding */
+            font-size: 1.1em; /* Slightly larger text */
+            text-align: center;
+        }
+        #messageLimitModal h2 {
+            font-size: 1.8em; /* Larger heading */
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+        #messageLimitModal p {
+            margin-bottom: 30px;
+            color: var(--text-color);
+        }
+        #messageLimitModal .auth-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-container {
+                height: 100vh;
+                border-radius: 0;
+                border: none;
+            }
+            
+            .header {
+                padding: 12px 16px;
+            }
+            
+            .logo {
+                font-size: 22px;
+            }
+            
+            .chat-area {
+                padding: 16px;
+            }
+            
+            .message-bubble {
+                max-width: 90%;
+                font-size: 16px;
+                padding: 10px 14px;
+            }
+            
+            .input-area {
+                padding: 12px 16px;
+            }
+            
+            #userInput {
+                font-size: 16px; /* Prevent zoom on iOS */
+            }
+
+            .chat-history-sidebar {
+                width: 250px; /* Smaller sidebar on mobile */
+            }
+        }
+
+        @media (max-width: 425px) {
+            .header {
+                padding: 10px 12px;
+            }
+            
+            .chat-area {
+                padding: 12px;
+            }
+            
+            .input-area {
+                padding: 10px 12px;
+            }
+            
+            .message-bubble {
+                max-width: 95%;
+            }
+        }
     </style>
 </head>
 <body>
-
-    <div class="main-layout">
+    <div class="main-container">
         <!-- Sidebar for Chat History -->
-        <aside id="sidebar">
-            <h1 class="text-2xl font-bold mb-6">Shubham GPT</h1>
-            <button id="new-chat-btn" class="w-full text-left p-3 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 flex items-center gap-2">
+        <div id="chatHistorySidebar" class="chat-history-sidebar hidden">
+            <div class="sidebar-header">
+                <h3 class="text-xl font-semibold">Chats</h3>
+                <button id="closeSidebarBtn" class="material-icons">close</button>
+            </div>
+            <button id="newChatButton" class="w-full">
                 <span class="material-icons">add</span> New Chat
             </button>
-            <nav id="chat-history-list" class="mt-6 flex-grow overflow-y-auto"></nav>
-        </aside>
-
-        <!-- Main Chat Area -->
-        <main id="chat-container">
-            <header class="header">
-                 <button id="menu-toggle" class="md:hidden">
-                    <span class="material-icons">menu</span>
-                </button>
-                <div id="header-user-info" class="flex items-center gap-4"></div>
-            </header>
-            <div id="chatHistory" class="chat-area flex flex-col"></div>
-            <div id="loadingIndicator" class="hidden text-center p-4">
-                <span class="text-gray-500">Shubham GPT is typing...</span>
+            <div id="chatThreadsList" class="chat-threads-list mt-4">
+                <!-- Chat threads will be loaded here -->
             </div>
-            <div class="input-area">
+        </div>
+
+        <!-- Sticky Header -->
+        <header class="header">
+            <div class="flex items-center justify-between">
                 <div class="flex items-center gap-4">
-                    <textarea id="userInput" rows="1" placeholder="Ask anything..."></textarea>
-                    <button id="sendButton" class="p-3 bg-blue-500 text-white rounded-full hover:bg-blue-600 disabled:bg-gray-400">
+                    <button id="toggleSidebarBtn" class="material-icons text-2xl hidden">menu</button>
+                    <div class="logo">
+                        Shubham <span class="gpt-text">GPT</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button id="themeToggleBtn" class="theme-toggle">
+                        🌙 Dark
+                    </button>
+                    <!-- Login Button -->
+                    <button id="loginButton" class="theme-toggle px-4 py-2 hidden">Login</button>
+                    <!-- User Avatar / Logout Option (Hidden by default) -->
+                    <div id="userAvatar" class="relative hidden">
+                        <!-- Avatar will be dynamically loaded -->
+                    </div>
+                    <button id="logoutButton" class="theme-toggle px-4 py-2 hidden">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Scrollable Chat Area -->
+        <div id="chatHistory" class="chat-area">
+            <!-- Messages will be added here by JavaScript -->
+        </div>
+
+        <!-- Loading Indicator -->
+        <div id="loadingIndicator" class="hidden flex items-center justify-center py-4">
+            <div class="loading-dots text-2xl">
+                <span>.</span><span>.</span><span>.</span>
+            </div>
+            <span class="loading-text">Shubham GPT is typing...</span>
+        </div>
+
+        <!-- Sticky Input Bar -->
+        <div class="input-area">
+            <div class="flex gap-3 items-end">
+                <textarea
+                    id="userInput"
+                    rows="1"
+                    class="flex-1"
+                    placeholder="Ask Shubham GPT anything..."
+                    oninput='this.style.height = "";this.style.height = Math.min(this.scrollHeight, 120) + "px"'
+                ></textarea>
+                <div class="button-container">
+                    <button id="sendButton" class="action-button" title="Send message">
                         <span class="material-icons">send</span>
+                    </button>
+                    <button id="stopButton" class="action-button stop-style hidden" title="Stop response">
+                        <span class="material-icons">stop_circle</span>
                     </button>
                 </div>
             </div>
-        </main>
+        </div>
     </div>
 
-    <!-- Login Modal -->
-    <div id="login-modal" class="hidden">
+    <!-- Login/Signup Modal -->
+    <div id="loginModal" class="modal-overlay hidden">
         <div class="modal-content">
-            <h2 class="text-2xl font-bold text-center mb-2">Sign In Required</h2>
-            <p class="text-center text-gray-600 mb-6">Please sign in to continue using Shubham GPT.</p>
-            
-            <div class="border-b border-gray-200 mb-4">
-                <nav class="flex -mb-px" id="login-tabs">
-                    <button data-tab="google" class="tab-btn w-1/3 py-4 px-1 text-center border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 active">Google</button>
-                    <button data-tab="email" class="tab-btn w-1/3 py-4 px-1 text-center border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">Email</button>
-                    <button data-tab="phone" class="tab-btn w-1/3 py-4 px-1 text-center border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">Phone</button>
-                </nav>
-            </div>
+            <button id="closeModalBtn" class="modal-close-button">x</button>
+            <h2 class="text-2xl font-bold mb-6">Sign In / Sign Up</h2>
 
-            <!-- Google Login -->
-            <div id="google-tab" class="tab-content active">
-                 <button id="google-login-btn" class="w-full mt-4 bg-white border border-gray-300 text-gray-700 font-semibold py-2 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-gray-50">
-                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+            <button id="googleSignInBtn" class="auth-button google">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google icon" class="w-5 h-5">
+                Sign in with Google
+            </button>
+
+            <form id="emailSignInForm" class="mt-4">
+                <p class="text-center my-4 opacity-70">Or use Email & Password</p>
+                <input type="email" id="emailInput" placeholder="Email" required class="w-full">
+                <input type="password" id="passwordInput" placeholder="Password" required class="w-full">
+                <button type="submit" class="w-full mt-2">Sign In / Sign Up</button>
+            </form>
+
+            <div class="text-center my-4 opacity-70">Or use Phone Number</div>
+            <form id="phoneSignInForm">
+                <input type="tel" id="phoneNumberInput" placeholder="e.g., +1234567890" required class="w-full">
+                <div id="recaptcha-container" class="mt-4"></div>
+                <button type="button" id="phoneSignInBtn" class="w-full mt-2">Send OTP</button>
+            </form>
+            <form id="verifyOtpForm" class="mt-4 hidden">
+                <input type="text" id="verificationCodeInput" placeholder="Verification Code" required class="w-full">
+                <button type="button" id="verifyOtpBtn" class="w-full mt-2">Verify OTP</button>
+            </form>
+            <p id="loginErrorMessage" class="modal-error-message hidden"></p>
+        </div>
+    </div>
+
+    <!-- Message Limit Modal (Hidden by default) -->
+    <div id="messageLimitModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button id="messageLimitModalClose" class="modal-close-button">x</button>
+            <h2 class="font-bold mb-4">To continue using Shubham GPT, please sign in</h2>
+            <p class="mb-6 opacity-80">You've reached your message limit as a guest. Please log in to unlock unlimited conversations and save your chat history.</p>
+            <div class="auth-options">
+                <button id="googleSignInBtnModal" class="auth-button google">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google icon" class="w-5 h-5">
                     Sign in with Google
                 </button>
+                <button id="emailSignInBtnModal" class="auth-button email">
+                    <span class="material-icons">email</span>
+                    Sign in with Email
+                </button>
+                <button id="phoneSignInBtnModal" class="auth-button phone">
+                    <span class="material-icons">phone</span>
+                    Sign in with Phone
+                </button>
             </div>
-            
-            <!-- Email/Password Login -->
-            <div id="email-tab" class="tab-content">
-                <input id="email-input" type="email" placeholder="Email" class="w-full p-2 border rounded mb-2">
-                <input id="password-input" type="password" placeholder="Password" class="w-full p-2 border rounded mb-4">
-                <button id="email-login-btn" class="w-full bg-blue-500 text-white py-2 rounded">Sign In</button>
-                <button id="email-signup-btn" class="w-full mt-2 text-sm text-blue-500">Need an account? Sign Up</button>
-            </div>
-
-            <!-- Phone Login -->
-            <div id="phone-tab" class="tab-content">
-                <div id="phone-input-container">
-                    <input id="phone-input" type="tel" placeholder="Phone Number" class="w-full p-2 border rounded mb-2">
-                    <button id="phone-signin-btn" class="w-full bg-blue-500 text-white py-2 rounded">Send Code</button>
-                    <div id="recaptcha-container" class="mt-2"></div>
-                </div>
-                <div id="code-input-container" class="hidden">
-                     <input id="code-input" type="text" placeholder="Verification Code" class="w-full p-2 border rounded mb-2">
-                     <button id="code-verify-btn" class="w-full bg-blue-500 text-white py-2 rounded">Verify Code</button>
-                </div>
-            </div>
-
         </div>
     </div>
 
 
     <script type="module">
+        // Firebase SDK Setup (Provided by user)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, EmailAuthProvider, PhoneAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, RecaptchaVerifier, signInWithPhoneNumber, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, addDoc, collection, query, where, getDocs, onSnapshot, orderBy } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-analytics.js";
 
-        // Firebase Config (Replace with your actual config)
+        // Firebase Authentication and Firestore Imports
+        import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, RecaptchaVerifier, signInWithPhoneNumber, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+        import { getFirestore, collection, doc, addDoc, getDoc, updateDoc, query, orderBy, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+
         const firebaseConfig = {
-             apiKey: "AIzaSyDT9qA2dQnwKQAIDBZaW4MfuQHzguQX6TY",
-             authDomain: "subham-gpt.firebaseapp.com",
-             projectId: "subham-gpt",
-             storageBucket: "subham-gpt.appspot.com",
-             messagingSenderId: "447950286722",
-             appId: "1:447950286722:web:b8197211d2d5851ee0699b",
-             measurementId: "G-3SSC49EL2R"
+            apiKey: "AIzaSyDT9qA2dQnwKQAIDBZaW4MfuQHzguQX6TY",
+            authDomain: "subham-gpt.firebaseapp.com",
+            projectId: "subham-gpt",
+            storageBucket: "subham-gpt.firebasestorage.app",
+            messagingSenderId: "447950286722",
+            appId: "1:447950286722:web:b8197211d2d5851ee0699b",
+            measurementId: "G-3SSC49EL2R"
         };
 
         const app = initializeApp(firebaseConfig);
+        getAnalytics(app); // Initialize Analytics, though not directly used in this logic
+
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // DOM Elements
-        const headerUserInfo = document.getElementById('header-user-info');
-        const loginModal = document.getElementById('login-modal');
-        const sendButton = document.getElementById('sendButton');
+        // Get references to HTML elements
         const userInput = document.getElementById('userInput');
+        const sendButton = document.getElementById('sendButton');
+        const stopButton = document.getElementById('stopButton');
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
         const chatHistoryDiv = document.getElementById('chatHistory');
-        const newChatBtn = document.getElementById('new-chat-btn');
-        const chatHistoryList = document.getElementById('chat-history-list');
+        const loadingIndicator = document.getElementById('loadingIndicator');
 
-        let currentUser = null;
-        let currentChatId = null;
-        let unsubscribeChat = null;
-        let messageCount = parseInt(sessionStorage.getItem('messageCount') || '0');
+        // New UI elements for login/chat management
+        const loginButton = document.getElementById('loginButton');
+        const logoutButton = document.getElementById('logoutButton');
+        const userAvatarDiv = document.getElementById('userAvatar');
+        const loginModal = document.getElementById('loginModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const googleSignInBtn = document.getElementById('googleSignInBtn');
+        const emailSignInForm = document.getElementById('emailSignInForm');
+        const emailInput = document.getElementById('emailInput');
+        const passwordInput = document.getElementById('passwordInput');
+        const phoneSignInForm = document.getElementById('phoneSignInForm');
+        const phoneNumberInput = document.getElementById('phoneNumberInput');
+        const phoneSignInBtn = document.getElementById('phoneSignInBtn');
+        const verificationCodeInput = document.getElementById('verificationCodeInput');
+        const verifyOtpForm = document.getElementById('verifyOtpForm');
+        const verifyOtpBtn = document.getElementById('verifyOtpBtn');
+        const loginErrorMessage = document.getElementById('loginErrorMessage');
+        const messageInputArea = document.querySelector('.input-area');
+        const messageLimitModal = document.getElementById('messageLimitModal');
+        const messageLimitModalClose = document.getElementById('messageLimitModalClose');
+        const googleSignInBtnModal = document.getElementById('googleSignInBtnModal');
+        const emailSignInBtnModal = document.getElementById('emailSignInBtnModal');
+        const phoneSignInBtnModal = document.getElementById('phoneSignInBtnModal');
+        const newChatButton = document.getElementById('newChatButton');
+        const chatHistorySidebar = document.getElementById('chatHistorySidebar');
+        const toggleSidebarBtn = document.getElementById('toggleSidebarBtn');
+        const closeSidebarBtn = document.getElementById('closeSidebarBtn');
+        const chatThreadsList = document.getElementById('chatThreadsList');
 
-        // --- Authentication State Management ---
-        onAuthStateChanged(auth, user => {
-            currentUser = user;
-            if (user) {
-                // User is logged in
-                loginModal.classList.add('hidden');
-                updateHeader(user);
-                newChatBtn.classList.remove('hidden');
-                loadUserChats(user.uid);
-                startNewChat();
+        // Store chat history in an array for the active thread
+        let chatHistory = [];
+        let abortController = null;
+        let isDarkMode = false;
+        let isResponding = false;
+        let currentUser = null; // Will store Firebase User object
+        let guestMessageCount = 0;
+        const MAX_GUEST_MESSAGES = 2;
+        let activeChatThreadId = null; // ID of the currently active chat thread
+        let userChatThreads = []; // Array to hold summaries of chat threads for the sidebar
+        let confirmationResult = null; // For phone auth OTP
+
+        // HARDCODED API KEY FOR IMMEDIATE FIX (as provided in original code)
+        const API_KEY = "AIzaSyDRp4pUWF7PJ-olOWnDu76v-S1HO3FvxGM";
+
+        // Function to swap between send and stop buttons
+        const showSendButton = () => {
+            sendButton.classList.remove('hidden');
+            stopButton.classList.add('hidden');
+            isResponding = false;
+        };
+
+        const showStopButton = () => {
+            sendButton.classList.add('hidden');
+            stopButton.classList.remove('hidden');
+            isResponding = true;
+        };
+
+        // Function to apply real-time formatting during typing
+        function applyRealtimeFormatting(text) {
+            // Convert ***text*** to highlight
+            text = text.replace(/\*\*\*(.*?)\*\*\*/g, '<span class="highlight">$1</span>');
+            // Convert **text** to bold
+            text = text.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+            // Convert * text to bullet points
+            text = text.replace(/^\* (.*?)$/gm, '• $1');
+            // Convert newlines to <br>
+            text = text.replace(/\n/g, '<br>');
+            return text;
+        }
+
+        // Enhanced typing effect with real-time formatting
+        const typeText = (element, text, delay = 20) => {
+            return new Promise(resolve => {
+                let i = 0;
+                const cursorSpan = document.createElement('span');
+                cursorSpan.className = 'blinking-cursor';
+                element.appendChild(cursorSpan);
+
+                const interval = setInterval(() => {
+                    if (abortController && abortController.signal.aborted) {
+                        clearInterval(interval);
+                        cursorSpan.remove();
+                        // Apply formatting to current content
+                        const currentText = text.substring(0, i);
+                        element.innerHTML = applyRealtimeFormatting(currentText);
+                        resolve();
+                        return;
+                    }
+
+                    if (i < text.length) {
+                        // Get current text and apply formatting
+                        const currentText = text.substring(0, i + 1);
+                        const beforeCursor = element.querySelector('.blinking-cursor');
+                        if (beforeCursor) element.removeChild(beforeCursor); // Ensure cursor exists before removal
+                        element.innerHTML = applyRealtimeFormatting(currentText);
+                        element.appendChild(cursorSpan);
+                        i++;
+                        chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight;
+                    } else {
+                        clearInterval(interval);
+                        cursorSpan.remove();
+                        // Final formatting
+                        element.innerHTML = applyRealtimeFormatting(text);
+                        resolve();
+                    }
+                }, delay);
+            });
+        };
+
+        // Function to add messages to chat history display
+        const addMessageToChat = async (sender, rawMessage) => {
+            const messageWrapper = document.createElement('div');
+            messageWrapper.className = `message-bubble ${sender === 'user' ? 'user-message' : 'bot-message'}`;
+            chatHistoryDiv.appendChild(messageWrapper);
+            chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight;
+
+            if (sender === 'bot') {
+                await typeText(messageWrapper, rawMessage);
             } else {
-                // User is logged out (guest)
-                updateHeader(null);
-                newChatBtn.classList.add('hidden');
-                chatHistoryList.innerHTML = '';
-                chatHistoryDiv.innerHTML = '<div class="bot-message message-bubble">Welcome! Ask me up to 2 questions. Please log in for unlimited access.</div>';
-                currentChatId = null;
+                messageWrapper.textContent = rawMessage;
+                messageWrapper.style.opacity = 1;
+                messageWrapper.style.transform = 'translateY(0)';
+            }
+        };
+
+        // Function to render all messages from chatHistory array
+        const renderChatHistory = async () => {
+            chatHistoryDiv.innerHTML = '';
+            // Initial welcome message only if no chat history is loaded
+            if (chatHistory.length === 0) {
+                 await addMessageToChat('bot', 'Hello! 👋 How can I help you today?');
+            }
+
+            for (const chat of chatHistory) {
+                const userMsgWrapper = document.createElement('div');
+                userMsgWrapper.className = `message-bubble user-message`;
+                userMsgWrapper.textContent = chat.user;
+                chatHistoryDiv.appendChild(userMsgWrapper);
+                userMsgWrapper.style.opacity = 1;
+                userMsgWrapper.style.transform = 'translateY(0)';
+
+                const botMsgWrapper = document.createElement('div');
+                botMsgWrapper.className = `message-bubble bot-message`;
+                // Use botFormatted if available, otherwise raw
+                botMsgWrapper.innerHTML = chat.botFormatted || applyRealtimeFormatting(chat.botRaw);
+                chatHistoryDiv.appendChild(botMsgWrapper);
+                botMsgWrapper.style.opacity = 1;
+                botMsgWrapper.style.transform = 'translateY(0)';
+            }
+            chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight;
+        };
+
+        // Function to show error message in modal
+        const showLoginError = (message) => {
+            loginErrorMessage.textContent = message;
+            loginErrorMessage.classList.remove('hidden');
+        };
+
+        const hideLoginError = () => {
+            loginErrorMessage.classList.add('hidden');
+            loginErrorMessage.textContent = '';
+        };
+
+        // --- Firebase Auth Logic ---
+
+        // Google Sign-In
+        googleSignInBtn.addEventListener('click', async () => {
+            const provider = new GoogleAuthProvider();
+            try {
+                await signInWithPopup(auth, provider);
+                loginModal.classList.add('hidden');
+                hideLoginError();
+            } catch (error) {
+                console.error("Error signing in with Google:", error);
+                showLoginError(`Google sign-in failed: ${error.message}`);
             }
         });
 
-        function updateHeader(user) {
-            headerUserInfo.innerHTML = '';
-            if (user) {
-                const profilePic = document.createElement('img');
-                profilePic.src = user.photoURL || `https://ui-avatars.com/api/?name=${user.email || 'User'}&background=random`;
-                profilePic.className = "w-10 h-10 rounded-full";
-                headerUserInfo.appendChild(profilePic);
-
-                const userName = document.createElement('span');
-                userName.textContent = user.displayName || user.email;
-                headerUserInfo.appendChild(userName);
-
-                const logoutBtn = document.createElement('button');
-                logoutBtn.innerHTML = `<span class="material-icons">logout</span>`;
-                logoutBtn.onclick = () => signOut(auth);
-                headerUserInfo.appendChild(logoutBtn);
-            } else {
-                const loginBtn = document.createElement('button');
-                loginBtn.textContent = 'Login';
-                loginBtn.className = 'px-4 py-2 bg-blue-500 text-white rounded-lg font-semibold';
-                loginBtn.onclick = () => loginModal.classList.remove('hidden');
-                headerUserInfo.appendChild(loginBtn);
+        // Google Sign-In from message limit modal
+        googleSignInBtnModal.addEventListener('click', async () => {
+            const provider = new GoogleAuthProvider();
+            try {
+                await signInWithPopup(auth, provider);
+                messageLimitModal.classList.add('hidden');
+                hideLoginError();
+            } catch (error) {
+                console.error("Error signing in with Google:", error);
+                showLoginError(`Google sign-in failed: ${error.message}`);
             }
-        }
-        
-        // --- Guest Message Limit Logic ---
-        function checkMessageLimit() {
-            if (!currentUser) {
-                if (messageCount >= 2) {
-                    loginModal.classList.remove('hidden');
-                    return false;
+        });
+
+        // Email/Password Sign-In/Sign-Up
+        emailSignInForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            hideLoginError();
+            const email = emailInput.value;
+            const password = passwordInput.value;
+
+            try {
+                // Try to sign in first
+                await signInWithEmailAndPassword(auth, email, password);
+                loginModal.classList.add('hidden');
+            } catch (signInError) {
+                if (signInError.code === 'auth/user-not-found' || signInError.code === 'auth/wrong-password') {
+                    // If sign-in fails, try to create an account
+                    try {
+                        await createUserWithEmailAndPassword(auth, email, password);
+                        loginModal.classList.add('hidden');
+                    } catch (signUpError) {
+                        console.error("Error signing up with Email:", signUpError);
+                        showLoginError(`Email sign-up failed: ${signUpError.message}`);
+                    }
+                } else {
+                    console.error("Error signing in with Email:", signInError);
+                    showLoginError(`Email sign-in failed: ${signInError.message}`);
                 }
-                messageCount++;
-                sessionStorage.setItem('messageCount', messageCount);
             }
-            return true;
-        }
+        });
 
-        // --- Chat Logic ---
-        async function handleSendMessage() {
+        // Email Sign-In option from message limit modal
+        emailSignInBtnModal.addEventListener('click', () => {
+            messageLimitModal.classList.add('hidden');
+            loginModal.classList.remove('hidden');
+            // Hide phone forms, show email form
+            emailSignInForm.classList.remove('hidden');
+            phoneSignInForm.classList.add('hidden');
+            verifyOtpForm.classList.add('hidden');
+        });
+
+        // Phone Number Sign-In (OTP)
+        let recaptchaVerifier;
+        // Ensure reCAPTCHA is initialized when modal opens or component is mounted
+        loginModal.addEventListener('transitionend', (e) => {
+            if (!loginModal.classList.contains('hidden') && e.propertyName === 'opacity') {
+                if (!recaptchaVerifier) {
+                    recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+                        'size': 'invisible', // Can be 'normal' or 'invisible'
+                        'callback': (response) => {
+                            // reCAPTCHA solved, allow signInWithPhoneNumber.
+                            // Not strictly needed for invisible recaptcha, but good for debugging.
+                            console.log('Recaptcha verified:', response);
+                        },
+                        'expired-callback': () => {
+                            showLoginError('reCAPTCHA expired. Please try again.');
+                        }
+                    });
+                }
+            }
+        });
+
+        phoneSignInBtn.addEventListener('click', async () => {
+            hideLoginError();
+            const phoneNumber = phoneNumberInput.value;
+            if (!phoneNumber) {
+                showLoginError('Please enter a phone number.');
+                return;
+            }
+
+            try {
+                // This will render the reCAPTCHA if not invisible and try to send OTP
+                confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
+                phoneSignInForm.classList.add('hidden');
+                verifyOtpForm.classList.remove('hidden');
+                showLoginError('OTP sent successfully!'); // Success message for OTP
+            } catch (error) {
+                console.error("Error sending OTP:", error);
+                showLoginError(`Failed to send OTP: ${error.message}`);
+                // Reset reCAPTCHA if there's an error
+                if (recaptchaVerifier) recaptchaVerifier.render().then(function(widgetId) { grecaptcha.reset(widgetId); });
+            }
+        });
+
+        verifyOtpBtn.addEventListener('click', async () => {
+            hideLoginError();
+            const code = verificationCodeInput.value;
+            if (!code) {
+                showLoginError('Please enter the verification code.');
+                return;
+            }
+            if (!confirmationResult) {
+                showLoginError('Something went wrong. Please try sending OTP again.');
+                return;
+            }
+
+            try {
+                await confirmationResult.confirm(code);
+                loginModal.classList.add('hidden');
+                verifyOtpForm.classList.add('hidden');
+                phoneSignInForm.classList.remove('hidden'); // Reset form for next use
+                phoneNumberInput.value = '';
+                verificationCodeInput.value = '';
+            } catch (error) {
+                console.error("Error verifying OTP:", error);
+                showLoginError(`Failed to verify code: ${error.message}`);
+            }
+        });
+
+        // Phone Sign-In option from message limit modal
+        phoneSignInBtnModal.addEventListener('click', () => {
+            messageLimitModal.classList.add('hidden');
+            loginModal.classList.remove('hidden');
+            // Hide email form, show phone form
+            emailSignInForm.classList.add('hidden');
+            phoneSignInForm.classList.remove('hidden');
+            verifyOtpForm.classList.add('hidden');
+        });
+
+        // Logout
+        logoutButton.addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                // Auth state listener will handle UI updates
+                addMessageToChat('bot', 'You have been logged out. Chat history cleared.');
+                activeChatThreadId = null; // Clear active thread
+                chatHistory = []; // Clear chat history display
+                userChatThreads = []; // Clear loaded threads
+                renderChatHistory(); // Render initial welcome message
+                localStorage.setItem('guestMessageCount', '0'); // Reset guest count
+                guestMessageCount = 0;
+            } catch (error) {
+                console.error("Error signing out:", error);
+                addMessageToChat('bot', 'Error logging out. Please try again.');
+            }
+        });
+
+        // --- Firebase Firestore Chat Management ---
+
+        // Function to save the current chat history to Firestore
+        const saveChatThread = async () => {
+            if (!currentUser || !activeChatThreadId) {
+                console.warn('Cannot save chat: User not logged in or no active thread.');
+                return;
+            }
+
+            const chatRef = doc(db, `users/${currentUser.uid}/chats/${activeChatThreadId}`);
+            try {
+                // Store chatHistory as an array of objects
+                await setDoc(chatRef, { messages: chatHistory, createdAt: new Date() }, { merge: true });
+                console.log(`Chat thread ${activeChatThreadId} saved successfully.`);
+
+                // Update the thread list if it's a new chat or title changed
+                const existingThreadIndex = userChatThreads.findIndex(thread => thread.id === activeChatThreadId);
+                const title = chatHistory.length > 0 ? chatHistory[0].user.substring(0, 50) + '...' : 'New Chat';
+                if (existingThreadIndex !== -1) {
+                    userChatThreads[existingThreadIndex].title = title;
+                } else {
+                    userChatThreads.unshift({ id: activeChatThreadId, title: title }); // Add to top
+                }
+                renderChatThreadsSidebar();
+
+            } catch (error) {
+                console.error("Error saving chat thread:", error);
+            }
+        };
+
+        // Function to load chat threads for a logged-in user
+        const loadChatThreads = async (userId) => {
+            if (!userId) return;
+
+            const chatsCollectionRef = collection(db, `users/${userId}/chats`);
+            const q = query(chatsCollectionRef, orderBy('createdAt', 'desc'));
+
+            // Use onSnapshot for real-time updates to the sidebar
+            onSnapshot(q, (snapshot) => {
+                userChatThreads = [];
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    // Assuming 'messages' array exists and first user message is title
+                    const title = data.messages && data.messages.length > 0
+                                  ? data.messages[0].user.substring(0, 50) + '...'
+                                  : 'Empty Chat';
+                    userChatThreads.push({ id: doc.id, title: title });
+                });
+                renderChatThreadsSidebar();
+
+                // If no active chat and threads exist, load the latest one automatically
+                if (!activeChatThreadId && userChatThreads.length > 0) {
+                    loadChatThreadMessages(userChatThreads[0].id);
+                } else if (!activeChatThreadId && userChatThreads.length === 0) {
+                     // If no chats exist, start a new one to show welcome message
+                     startNewChat();
+                }
+            }, (error) => {
+                console.error("Error loading chat threads:", error);
+            });
+        };
+
+        // Function to load messages for a specific chat thread
+        const loadChatThreadMessages = async (threadId) => {
+            if (!currentUser) return;
+
+            // Save current chat before loading new one, if there's an active one
+            if (activeChatThreadId && chatHistory.length > 0) {
+                await saveChatThread();
+            }
+
+            activeChatThreadId = threadId;
+            const chatRef = doc(db, `users/${currentUser.uid}/chats/${threadId}`);
+            try {
+                const docSnap = await getDoc(chatRef);
+                if (docSnap.exists()) {
+                    chatHistory = docSnap.data().messages || [];
+                    console.log(`Loaded chat thread ${threadId}.`);
+                } else {
+                    chatHistory = []; // No messages in this thread yet
+                    console.log(`No messages found for thread ${threadId}.`);
+                }
+                renderChatHistory(); // Re-render chat area with loaded history
+                // Highlight active thread in sidebar
+                document.querySelectorAll('.chat-thread-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                document.getElementById(`thread-${threadId}`)?.classList.add('active');
+            } catch (error) {
+                console.error("Error loading chat thread messages:", error);
+                chatHistory = []; // Clear in case of error
+                renderChatHistory();
+            }
+        };
+
+        // Function to start a new chat thread
+        const startNewChat = async () => {
+            if (currentUser) {
+                // Save current chat before starting a new one, if there's an active one
+                if (activeChatThreadId && chatHistory.length > 0) {
+                    await saveChatThread();
+                }
+                
+                // Generate a new thread ID (using timestamp for simplicity)
+                activeChatThreadId = Date.now().toString();
+                chatHistory = []; // Clear current chat history
+                renderChatHistory(); // Render with just the welcome message
+
+                // Add to userChatThreads immediately for UI update
+                userChatThreads.unshift({ id: activeChatThreadId, title: 'New Chat' });
+                renderChatThreadsSidebar();
+                // Highlight the new chat as active
+                document.querySelectorAll('.chat-thread-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                document.getElementById(`thread-${activeChatThreadId}`)?.classList.add('active');
+
+            } else {
+                // Guests don't get new threads, just clear display
+                chatHistory = [];
+                renderChatHistory();
+            }
+        };
+
+        // Function to render chat threads in the sidebar
+        const renderChatThreadsSidebar = () => {
+            chatThreadsList.innerHTML = ''; // Clear existing list
+            userChatThreads.forEach(thread => {
+                const threadItem = document.createElement('div');
+                threadItem.id = `thread-${thread.id}`;
+                threadItem.className = `chat-thread-item ${thread.id === activeChatThreadId ? 'active' : ''}`;
+                threadItem.textContent = thread.title;
+                threadItem.addEventListener('click', () => {
+                    loadChatThreadMessages(thread.id);
+                    chatHistorySidebar.classList.remove('open'); // Close sidebar on selection
+                });
+                chatThreadsList.appendChild(threadItem);
+            });
+        };
+
+        // --- Event Listeners and Initial Setup ---
+
+        // Main send button event listener
+        sendButton.addEventListener('click', async () => {
+            if (isResponding) return; // Prevent multiple requests
+
             const prompt = userInput.value.trim();
-            if (!prompt) return;
+            if (!prompt) {
+                await addMessageToChat('bot', 'Please enter your question before submitting.');
+                return;
+            }
 
-            if (!checkMessageLimit()) return;
-            
+            // Guest message limit check
+            if (!currentUser) {
+                guestMessageCount++;
+                localStorage.setItem('guestMessageCount', guestMessageCount.toString());
+                if (guestMessageCount >= MAX_GUEST_MESSAGES) {
+                    userInput.disabled = true;
+                    sendButton.disabled = true;
+                    messageInputArea.classList.add('pointer-events-none', 'opacity-50');
+                    messageLimitModal.classList.remove('hidden');
+                    return; // Stop further execution for guests
+                }
+            }
+
+            await addMessageToChat('user', prompt);
             userInput.value = '';
-            addMessageToChat('user', prompt);
-            
-            if (currentUser && currentChatId) {
-                await addDoc(collection(db, "users", currentUser.uid, "chats", currentChatId, "messages"), {
-                    role: 'user',
-                    content: prompt,
-                    timestamp: new Date()
+            userInput.style.height = '';
+
+            // Immediately swap to stop button
+            showStopButton();
+            loadingIndicator.classList.remove('hidden');
+
+            abortController = new AbortController();
+            const signal = abortController.signal;
+
+            try {
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
+
+                // Prepare chat history for LLM API call
+                const formattedChatHistory = chatHistory.map(msg => ({
+                    role: msg.sender === 'user' ? 'user' : 'model', // Gemini API expects 'model' for bot
+                    parts: [{ text: msg.rawMessage || msg.user }] // Use raw message for bot, user for user
+                }));
+                // Add the current user's prompt as the last message for context
+                formattedChatHistory.push({ role: "user", parts: [{ text: prompt }] });
+
+                const payload = { contents: formattedChatHistory };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                    signal: signal
                 });
+
+                const result = await response.json();
+                let botRawResponseText = 'Sorry, I couldn\'t generate a response. Please try again.';
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    botRawResponseText = result.candidates[0].content.parts[0].text;
+                } else if (response.status === 429) {
+                     botRawResponseText = 'Too many requests. Please wait a moment and try again.';
+                } else if (!signal.aborted) {
+                    console.error('Unexpected API response structure:', result);
+                }
+
+                if (!signal.aborted) {
+                    await addMessageToChat('bot', botRawResponseText);
+                    // Store messages with sender and raw/formatted content
+                    chatHistory.push({ sender: 'user', user: prompt, rawMessage: prompt });
+                    chatHistory.push({ sender: 'bot', botRaw: botRawResponseText, botFormatted: applyRealtimeFormatting(botRawResponseText), rawMessage: botRawResponseText });
+
+                    // Save chat history to Firestore if logged in
+                    if (currentUser) {
+                        await saveChatThread();
+                    }
+                }
+
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    console.log('Fetch aborted by user.');
+                    await addMessageToChat('bot', 'Response stopped.');
+                } else {
+                    const errorMessage = `An error occurred: ${error.message}. Please check your internet connection and try again.`;
+                    await addMessageToChat('bot', errorMessage);
+                    console.error('Error fetching from Gemini API:', error);
+                }
+            } finally {
+                loadingIndicator.classList.add('hidden');
+                showSendButton(); // Always return to send button
+                abortController = null;
+                chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight;
             }
-            
-            // In a real app, you would fetch from your LLM here.
-             const botResponse = `This is a simulated response to: "${prompt}"`;
-             addMessageToChat('bot', botResponse);
-             if (currentUser && currentChatId) {
-                await addDoc(collection(db, "users", currentUser.uid, "chats", currentChatId, "messages"), {
-                    role: 'bot',
-                    content: botResponse,
-                    timestamp: new Date()
-                });
+        });
+
+        // Event listener for the stop button
+        stopButton.addEventListener('click', () => {
+            if (abortController) {
+                abortController.abort();
+                console.log('API request aborted.');
+                loadingIndicator.classList.add('hidden');
+                showSendButton(); // Return to send button
             }
-        }
-        
-        sendButton.addEventListener('click', handleSendMessage);
-        userInput.addEventListener('keydown', e => {
+        });
+
+        // Theme Toggle Logic
+        themeToggleBtn.addEventListener('click', () => {
+            isDarkMode = !isDarkMode;
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+                themeToggleBtn.textContent = '☀️ Light';
+            } else {
+                document.body.classList.remove('dark-mode');
+                themeToggleBtn.textContent = '🌙 Dark';
+            }
+        });
+
+        // Enter key handling for user input
+        userInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
-                handleSendMessage();
+                if (!isResponding && !userInput.disabled) { // Only send if not currently responding and input is enabled
+                    sendButton.click();
+                }
             }
         });
 
-        function addMessageToChat(sender, message) {
-            const messageEl = document.createElement('div');
-            messageEl.className = `message-bubble ${sender === 'user' ? 'user-message' : 'bot-message'}`;
-            messageEl.textContent = message;
-            chatHistoryDiv.appendChild(messageEl);
-            chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight;
-        }
+        // Open Login Modal
+        loginButton.addEventListener('click', () => {
+            loginModal.classList.remove('hidden');
+            hideLoginError();
+            // Reset forms for fresh input
+            emailInput.value = '';
+            passwordInput.value = '';
+            phoneNumberInput.value = '';
+            verificationCodeInput.value = '';
+            emailSignInForm.classList.remove('hidden'); // Default to email form
+            phoneSignInForm.classList.add('hidden');
+            verifyOtpForm.classList.add('hidden');
+        });
 
-        // --- Firestore Chat History ---
-        newChatBtn.addEventListener('click', startNewChat);
+        // Close Login Modal
+        closeModalBtn.addEventListener('click', () => {
+            loginModal.classList.add('hidden');
+            hideLoginError();
+            // Reset reCAPTCHA if it was initialized
+            if (recaptchaVerifier) recaptchaVerifier.render().then(function(widgetId) { grecaptcha.reset(widgetId); });
+        });
 
-        async function startNewChat() {
-            if (!currentUser) return;
-            if (unsubscribeChat) unsubscribeChat();
+        // Close Message Limit Modal
+        messageLimitModalClose.addEventListener('click', () => {
+            messageLimitModal.classList.add('hidden');
+        });
 
-            const newChatRef = await addDoc(collection(db, "users", currentUser.uid, "chats"), {
-                title: "New Chat",
-                createdAt: new Date()
-            });
-            loadChat(newChatRef.id);
-        }
-        
-        async function loadUserChats(uid) {
-            const q = query(collection(db, "users", uid, "chats"), orderBy("createdAt", "desc"));
-            onSnapshot(q, (snapshot) => {
-                chatHistoryList.innerHTML = '';
-                snapshot.forEach(doc => {
-                    const chatItem = document.createElement('button');
-                    chatItem.className = 'w-full text-left p-2 rounded-lg hover:bg-gray-100 truncate';
-                    chatItem.textContent = doc.data().title || "Untitled Chat";
-                    if(doc.id === currentChatId) {
-                        chatItem.classList.add('bg-gray-200');
+        // New Chat Button
+        newChatButton.addEventListener('click', startNewChat);
+
+        // Toggle Sidebar
+        toggleSidebarBtn.addEventListener('click', () => {
+            chatHistorySidebar.classList.toggle('open');
+        });
+
+        // Close Sidebar
+        closeSidebarBtn.addEventListener('click', () => {
+            chatHistorySidebar.classList.remove('open');
+        });
+
+        // --- Initial Setup on DOM Load ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check initial auth state
+            onAuthStateChanged(auth, async (user) => {
+                currentUser = user;
+                if (user) {
+                    // Logged in user
+                    loginButton.classList.add('hidden');
+                    userAvatarDiv.classList.remove('hidden');
+                    userAvatarDiv.innerHTML = `
+                        <img src="${user.photoURL || 'https://placehold.co/40x40/cccccc/000000?text=U'}" alt="User Avatar" class="w-10 h-10 rounded-full cursor-pointer">
+                        <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></span>
+                    `; // Added online indicator
+                    logoutButton.classList.remove('hidden');
+                    loginModal.classList.add('hidden'); // Hide any open login modal
+                    messageLimitModal.classList.add('hidden'); // Hide message limit modal
+                    userInput.disabled = false; // Enable input
+                    sendButton.disabled = false;
+                    messageInputArea.classList.remove('pointer-events-none', 'opacity-50'); // Ensure input is enabled
+
+                    toggleSidebarBtn.classList.remove('hidden'); // Show sidebar toggle
+                    chatHistorySidebar.classList.remove('hidden'); // Show sidebar container
+                    
+                    await loadChatThreads(user.uid); // Load user's chat threads
+
+                } else {
+                    // Guest user
+                    currentUser = null;
+                    loginButton.classList.remove('hidden');
+                    userAvatarDiv.classList.add('hidden');
+                    logoutButton.classList.add('hidden');
+                    toggleSidebarBtn.classList.add('hidden'); // Hide sidebar toggle
+                    chatHistorySidebar.classList.add('hidden'); // Hide sidebar container
+
+                    guestMessageCount = parseInt(localStorage.getItem('guestMessageCount') || '0');
+                    if (guestMessageCount >= MAX_GUEST_MESSAGES) {
+                        userInput.disabled = true; // Disable input
+                        sendButton.disabled = true;
+                        messageInputArea.classList.add('pointer-events-none', 'opacity-50'); // Visually disable
+                        messageLimitModal.classList.remove('hidden'); // Show message limit modal
+                    } else {
+                        userInput.disabled = false;
+                        sendButton.disabled = false;
+                        messageInputArea.classList.remove('pointer-events-none', 'opacity-50');
                     }
-                    chatItem.onclick = () => loadChat(doc.id);
-                    chatHistoryList.appendChild(chatItem);
-                });
+                    chatHistory = []; // Clear chat history for guests
+                    renderChatHistory(); // Render initial welcome message for guests
+                }
             });
-        }
-        
-        function loadChat(chatId) {
-            if (!currentUser) return;
-            currentChatId = chatId;
-            chatHistoryDiv.innerHTML = '';
-            
-            if (unsubscribeChat) unsubscribeChat();
-            
-            const messagesQuery = query(collection(db, "users", currentUser.uid, "chats", chatId, "messages"), orderBy("timestamp"));
-            unsubscribeChat = onSnapshot(messagesQuery, (snapshot) => {
-                chatHistoryDiv.innerHTML = '';
-                snapshot.forEach(doc => {
-                    const msg = doc.data();
-                    addMessageToChat(msg.role, msg.content);
-                });
-            });
-
-            // Highlight active chat in the list
-            Array.from(chatHistoryList.children).forEach(child => {
-                 child.classList.toggle('bg-gray-200', child.textContent === document.querySelector(`[data-chat-id='${chatId}']`)?.textContent);
-            });
-        }
-        
-        // --- Login Modal Logic ---
-        document.getElementById('login-tabs').addEventListener('click', e => {
-            if(e.target.classList.contains('tab-btn')) {
-                const tab = e.target.dataset.tab;
-                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active', 'border-blue-500', 'text-blue-600'));
-                e.target.classList.add('active', 'border-blue-500', 'text-blue-600');
-                
-                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-                document.getElementById(`${tab}-tab`).classList.add('active');
-            }
         });
-        
-        // Google Sign In
-        document.getElementById('google-login-btn').onclick = () => {
-            signInWithPopup(auth, new GoogleAuthProvider()).catch(err => console.error(err));
-        };
-        
-        // Email/Pass Sign In
-        document.getElementById('email-login-btn').onclick = () => {
-            const email = document.getElementById('email-input').value;
-            const pass = document.getElementById('password-input').value;
-            signInWithEmailAndPassword(auth, email, pass).catch(err => alert(err.message));
-        };
-        document.getElementById('email-signup-btn').onclick = () => {
-            const email = document.getElementById('email-input').value;
-            const pass = document.getElementById('password-input').value;
-            createUserWithEmailAndPassword(auth, email, pass).catch(err => alert(err.message));
-        };
-
-        // Phone Sign In
-        window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { 'size': 'invisible' });
-
-        document.getElementById('phone-signin-btn').onclick = () => {
-            const phoneNumber = document.getElementById('phone-input').value;
-            signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier)
-                .then(confirmationResult => {
-                    window.confirmationResult = confirmationResult;
-                    document.getElementById('phone-input-container').classList.add('hidden');
-                    document.getElementById('code-input-container').classList.remove('hidden');
-                }).catch(err => {
-                    console.error(err);
-                    alert("Error sending code. Make sure the number is correct and includes country code (e.g., +1... or +91...).");
-                });
-        };
-        document.getElementById('code-verify-btn').onclick = () => {
-            const code = document.getElementById('code-input').value;
-            window.confirmationResult.confirm(code).catch(err => alert(err.message));
-        };
-
-        // Mobile sidebar toggle
-        document.getElementById('menu-toggle').addEventListener('click', () => {
-             document.getElementById('sidebar').classList.toggle('open');
-        });
-
     </script>
 </body>
 </html>
