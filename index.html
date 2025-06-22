@@ -38,10 +38,10 @@
             --shadow-medium: rgba(0, 0, 0, 0.12);
             --highlight-bg: yellow;
             --highlight-text: black;
-            --sidebar-bg: #f0f0f0;
-            --sidebar-border: rgba(0, 0, 0, 0.1);
-            --thread-item-hover: #e0e0e0;
-            --thread-item-active: #d0d0d0;
+            --sidebar-bg: #f0f0f0; /* Kept for theme consistency, though sidebar removed */
+            --sidebar-border: rgba(0, 0, 0, 0.1); /* Kept for theme consistency */
+            --thread-item-hover: #e0e0e0; /* Kept for theme consistency */
+            --thread-item-active: #d0d0d0; /* Kept for theme consistency */
             --modal-bg: rgba(0, 0, 0, 0.5);
             --modal-content-bg: #ffffff;
         }
@@ -70,10 +70,10 @@
             --shadow-medium: rgba(0, 0, 0, 0.4);
             --highlight-bg: yellow;
             --highlight-text: black;
-            --sidebar-bg: #2d3748;
-            --sidebar-border: rgba(255, 255, 255, 0.15);
-            --thread-item-hover: #3a475d;
-            --thread-item-active: #4a5a75;
+            --sidebar-bg: #2d3748; /* Kept for theme consistency, though sidebar removed */
+            --sidebar-border: rgba(255, 255, 255, 0.15); /* Kept for theme consistency */
+            --thread-item-hover: #3a475d; /* Kept for theme consistency */
+            --thread-item-active: #4a5a75; /* Kept for theme consistency */
             --modal-bg: rgba(0, 0, 0, 0.7);
             --modal-content-bg: #1e293b;
         }
@@ -338,95 +338,6 @@
             border-radius: 4px;
         }
 
-        /* New Chat Button */
-        #newChatButton {
-            background-color: var(--button-primary-bg);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 12px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            box-shadow: 0 2px 4px var(--shadow-light);
-            margin-top: 20px;
-        }
-
-        #newChatButton:hover {
-            background-color: var(--button-primary-hover);
-        }
-
-        /* Sidebar for Chat History */
-        .chat-history-sidebar {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 300px; /* Adjust as needed */
-            height: 100%;
-            background-color: var(--sidebar-bg);
-            border-right: 1px solid var(--sidebar-border);
-            transform: translateX(-100%);
-            transition: transform 0.3s ease-in-out;
-            z-index: 20;
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            box-shadow: 2px 0 5px var(--shadow-medium);
-        }
-
-        .chat-history-sidebar.open {
-            transform: translateX(0);
-        }
-
-        .sidebar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 15px;
-            margin-bottom: 15px;
-            border-bottom: 1px solid var(--sidebar-border);
-        }
-
-        .chat-threads-list {
-            flex-grow: 1;
-            overflow-y: auto;
-            margin-bottom: 15px;
-        }
-
-        .chat-threads-list::-webkit-scrollbar {
-            width: 4px;
-        }
-        .chat-threads-list::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .chat-threads-list::-webkit-scrollbar-thumb {
-            background: var(--border-color);
-            border-radius: 2px;
-        }
-
-        .chat-thread-item {
-            padding: 10px 15px;
-            margin-bottom: 8px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-            color: var(--text-color);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .chat-thread-item:hover {
-            background-color: var(--thread-item-hover);
-        }
-
-        .chat-thread-item.active {
-            background-color: var(--thread-item-active);
-            font-weight: 500;
-        }
-
         /* Login Modal */
         .modal-overlay {
             position: fixed;
@@ -600,10 +511,6 @@
             #userInput {
                 font-size: 16px; /* Prevent zoom on iOS */
             }
-
-            .chat-history-sidebar {
-                width: 250px; /* Smaller sidebar on mobile */
-            }
         }
 
         @media (max-width: 425px) {
@@ -627,25 +534,11 @@
 </head>
 <body>
     <div class="main-container">
-        <!-- Sidebar for Chat History -->
-        <div id="chatHistorySidebar" class="chat-history-sidebar hidden">
-            <div class="sidebar-header">
-                <h3 class="text-xl font-semibold">Chats</h3>
-                <button id="closeSidebarBtn" class="material-icons">close</button>
-            </div>
-            <button id="newChatButton" class="w-full">
-                <span class="material-icons">add</span> New Chat
-            </button>
-            <div id="chatThreadsList" class="chat-threads-list mt-4">
-                <!-- Chat threads will be loaded here -->
-            </div>
-        </div>
-
         <!-- Sticky Header -->
         <header class="header">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-4">
-                    <button id="toggleSidebarBtn" class="material-icons text-2xl hidden">menu</button>
+                    <!-- Removed: Sidebar Toggle Button -->
                     <div class="logo">
                         Shubham <span class="gpt-text">GPT</span>
                     </div>
@@ -763,7 +656,8 @@
 
         // Firebase Authentication and Firestore Imports
         import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, RecaptchaVerifier, signInWithPhoneNumber, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
-        import { getFirestore, collection, doc, addDoc, getDoc, updateDoc, query, orderBy, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+        // Removed Firestore imports as chat history is no longer persisted
+        // import { getFirestore, collection, doc, addDoc, getDoc, updateDoc, query, orderBy, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDT9qA2dQnwKQAIDBZaW4MfuQHzguQX6TY",
@@ -779,7 +673,8 @@
         getAnalytics(app); // Initialize Analytics, though not directly used in this logic
 
         const auth = getAuth(app);
-        const db = getFirestore(app);
+        // Removed Firestore initialization as chat history is no longer persisted
+        // const db = getFirestore(app);
 
         // Get references to HTML elements
         const userInput = document.getElementById('userInput');
@@ -789,7 +684,7 @@
         const chatHistoryDiv = document.getElementById('chatHistory');
         const loadingIndicator = document.getElementById('loadingIndicator');
 
-        // New UI elements for login/chat management
+        // UI elements for login/chat management
         const loginButton = document.getElementById('loginButton');
         const logoutButton = document.getElementById('logoutButton');
         const userAvatarDiv = document.getElementById('userAvatar');
@@ -812,13 +707,14 @@
         const googleSignInBtnModal = document.getElementById('googleSignInBtnModal');
         const emailSignInBtnModal = document.getElementById('emailSignInBtnModal');
         const phoneSignInBtnModal = document.getElementById('phoneSignInBtnModal');
-        const newChatButton = document.getElementById('newChatButton');
-        const chatHistorySidebar = document.getElementById('chatHistorySidebar');
-        const toggleSidebarBtn = document.getElementById('toggleSidebarBtn');
-        const closeSidebarBtn = document.getElementById('closeSidebarBtn');
-        const chatThreadsList = document.getElementById('chatThreadsList');
+        // Removed references to chat history and new chat UI elements
+        // const newChatButton = document.getElementById('newChatButton');
+        // const chatHistorySidebar = document.getElementById('chatHistorySidebar');
+        // const toggleSidebarBtn = document.getElementById('toggleSidebarBtn');
+        // const closeSidebarBtn = document.getElementById('closeSidebarBtn');
+        // const chatThreadsList = document.getElementById('chatThreadsList');
 
-        // Store chat history in an array for the active thread
+        // Store chat history in an array for the active session only
         let chatHistory = [];
         let abortController = null;
         let isDarkMode = false;
@@ -826,8 +722,9 @@
         let currentUser = null; // Will store Firebase User object
         let guestMessageCount = 0;
         const MAX_GUEST_MESSAGES = 2;
-        let activeChatThreadId = null; // ID of the currently active chat thread
-        let userChatThreads = []; // Array to hold summaries of chat threads for the sidebar
+        // Removed activeChatThreadId and userChatThreads as history persistence is removed
+        // let activeChatThreadId = null;
+        // let userChatThreads = [];
         let confirmationResult = null; // For phone auth OTP
 
         // HARDCODED API KEY FOR IMMEDIATE FIX (as provided in original code)
@@ -1102,9 +999,8 @@
                 await signOut(auth);
                 // Auth state listener will handle UI updates
                 addMessageToChat('bot', 'You have been logged out. Chat history cleared.');
-                activeChatThreadId = null; // Clear active thread
-                chatHistory = []; // Clear chat history display
-                userChatThreads = []; // Clear loaded threads
+                // Removed history-related variable resets
+                chatHistory = []; // Clear current session chat history
                 renderChatHistory(); // Render initial welcome message
                 localStorage.setItem('guestMessageCount', '0'); // Reset guest count
                 guestMessageCount = 0;
@@ -1114,145 +1010,9 @@
             }
         });
 
-        // --- Firebase Firestore Chat Management ---
-
-        // Function to save the current chat history to Firestore
-        const saveChatThread = async () => {
-            if (!currentUser || !activeChatThreadId) {
-                console.warn('Cannot save chat: User not logged in or no active thread.');
-                return;
-            }
-
-            const chatRef = doc(db, `users/${currentUser.uid}/chats/${activeChatThreadId}`);
-            try {
-                // Store chatHistory as an array of objects
-                await setDoc(chatRef, { messages: chatHistory, createdAt: new Date() }, { merge: true });
-                console.log(`Chat thread ${activeChatThreadId} saved successfully.`);
-
-                // Update the thread list if it's a new chat or title changed
-                const existingThreadIndex = userChatThreads.findIndex(thread => thread.id === activeChatThreadId);
-                const title = chatHistory.length > 0 ? chatHistory[0].user.substring(0, 50) + '...' : 'New Chat';
-                if (existingThreadIndex !== -1) {
-                    userChatThreads[existingThreadIndex].title = title;
-                } else {
-                    userChatThreads.unshift({ id: activeChatThreadId, title: title }); // Add to top
-                }
-                renderChatThreadsSidebar();
-
-            } catch (error) {
-                console.error("Error saving chat thread:", error);
-            }
-        };
-
-        // Function to load chat threads for a logged-in user
-        const loadChatThreads = async (userId) => {
-            if (!userId) return;
-
-            const chatsCollectionRef = collection(db, `users/${userId}/chats`);
-            const q = query(chatsCollectionRef, orderBy('createdAt', 'desc'));
-
-            // Use onSnapshot for real-time updates to the sidebar
-            onSnapshot(q, (snapshot) => {
-                userChatThreads = [];
-                snapshot.forEach((doc) => {
-                    const data = doc.data();
-                    // Assuming 'messages' array exists and first user message is title
-                    const title = data.messages && data.messages.length > 0
-                                  ? data.messages[0].user.substring(0, 50) + '...'
-                                  : 'Empty Chat';
-                    userChatThreads.push({ id: doc.id, title: title });
-                });
-                renderChatThreadsSidebar();
-
-                // If no active chat and threads exist, load the latest one automatically
-                if (!activeChatThreadId && userChatThreads.length > 0) {
-                    loadChatThreadMessages(userChatThreads[0].id);
-                } else if (!activeChatThreadId && userChatThreads.length === 0) {
-                     // If no chats exist, start a new one to show welcome message
-                     startNewChat();
-                }
-            }, (error) => {
-                console.error("Error loading chat threads:", error);
-            });
-        };
-
-        // Function to load messages for a specific chat thread
-        const loadChatThreadMessages = async (threadId) => {
-            if (!currentUser) return;
-
-            // Save current chat before loading new one, if there's an active one
-            if (activeChatThreadId && chatHistory.length > 0) {
-                await saveChatThread();
-            }
-
-            activeChatThreadId = threadId;
-            const chatRef = doc(db, `users/${currentUser.uid}/chats/${threadId}`);
-            try {
-                const docSnap = await getDoc(chatRef);
-                if (docSnap.exists()) {
-                    chatHistory = docSnap.data().messages || [];
-                    console.log(`Loaded chat thread ${threadId}.`);
-                } else {
-                    chatHistory = []; // No messages in this thread yet
-                    console.log(`No messages found for thread ${threadId}.`);
-                }
-                renderChatHistory(); // Re-render chat area with loaded history
-                // Highlight active thread in sidebar
-                document.querySelectorAll('.chat-thread-item').forEach(item => {
-                    item.classList.remove('active');
-                });
-                document.getElementById(`thread-${threadId}`)?.classList.add('active');
-            } catch (error) {
-                console.error("Error loading chat thread messages:", error);
-                chatHistory = []; // Clear in case of error
-                renderChatHistory();
-            }
-        };
-
-        // Function to start a new chat thread
-        const startNewChat = async () => {
-            if (currentUser) {
-                // Save current chat before starting a new one, if there's an active one
-                if (activeChatThreadId && chatHistory.length > 0) {
-                    await saveChatThread();
-                }
-                
-                // Generate a new thread ID (using timestamp for simplicity)
-                activeChatThreadId = Date.now().toString();
-                chatHistory = []; // Clear current chat history
-                renderChatHistory(); // Render with just the welcome message
-
-                // Add to userChatThreads immediately for UI update
-                userChatThreads.unshift({ id: activeChatThreadId, title: 'New Chat' });
-                renderChatThreadsSidebar();
-                // Highlight the new chat as active
-                document.querySelectorAll('.chat-thread-item').forEach(item => {
-                    item.classList.remove('active');
-                });
-                document.getElementById(`thread-${activeChatThreadId}`)?.classList.add('active');
-
-            } else {
-                // Guests don't get new threads, just clear display
-                chatHistory = [];
-                renderChatHistory();
-            }
-        };
-
-        // Function to render chat threads in the sidebar
-        const renderChatThreadsSidebar = () => {
-            chatThreadsList.innerHTML = ''; // Clear existing list
-            userChatThreads.forEach(thread => {
-                const threadItem = document.createElement('div');
-                threadItem.id = `thread-${thread.id}`;
-                threadItem.className = `chat-thread-item ${thread.id === activeChatThreadId ? 'active' : ''}`;
-                threadItem.textContent = thread.title;
-                threadItem.addEventListener('click', () => {
-                    loadChatThreadMessages(thread.id);
-                    chatHistorySidebar.classList.remove('open'); // Close sidebar on selection
-                });
-                chatThreadsList.appendChild(threadItem);
-            });
-        };
+        // --- No longer persist chat history to Firestore ---
+        // Removed Firebase Firestore Chat Management functions:
+        // saveChatThread, loadChatThreads, loadChatThreadMessages, startNewChat, renderChatThreadsSidebar
 
         // --- Event Listeners and Initial Setup ---
 
@@ -1293,7 +1053,7 @@
             try {
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
 
-                // Prepare chat history for LLM API call
+                // Prepare chat history for LLM API call (session-based only)
                 const formattedChatHistory = chatHistory.map(msg => ({
                     role: msg.sender === 'user' ? 'user' : 'model', // Gemini API expects 'model' for bot
                     parts: [{ text: msg.rawMessage || msg.user }] // Use raw message for bot, user for user
@@ -1325,14 +1085,9 @@
 
                 if (!signal.aborted) {
                     await addMessageToChat('bot', botRawResponseText);
-                    // Store messages with sender and raw/formatted content
+                    // Store messages with sender and raw/formatted content (session-based)
                     chatHistory.push({ sender: 'user', user: prompt, rawMessage: prompt });
                     chatHistory.push({ sender: 'bot', botRaw: botRawResponseText, botFormatted: applyRealtimeFormatting(botRawResponseText), rawMessage: botRawResponseText });
-
-                    // Save chat history to Firestore if logged in
-                    if (currentUser) {
-                        await saveChatThread();
-                    }
                 }
 
             } catch (error) {
@@ -1345,6 +1100,7 @@
                     console.error('Error fetching from Gemini API:', error);
                 }
             } finally {
+                // This correctly ensures the Send button shows after response completes or is aborted.
                 loadingIndicator.classList.add('hidden');
                 showSendButton(); // Always return to send button
                 abortController = null;
@@ -1411,18 +1167,18 @@
             messageLimitModal.classList.add('hidden');
         });
 
-        // New Chat Button
-        newChatButton.addEventListener('click', startNewChat);
+        // Removed New Chat Button event listener
+        // newChatButton.addEventListener('click', startNewChat);
 
-        // Toggle Sidebar
-        toggleSidebarBtn.addEventListener('click', () => {
-            chatHistorySidebar.classList.toggle('open');
-        });
+        // Removed Toggle Sidebar event listener
+        // toggleSidebarBtn.addEventListener('click', () => {
+        //     chatHistorySidebar.classList.toggle('open');
+        // });
 
-        // Close Sidebar
-        closeSidebarBtn.addEventListener('click', () => {
-            chatHistorySidebar.classList.remove('open');
-        });
+        // Removed Close Sidebar event listener
+        // closeSidebarBtn.addEventListener('click', () => {
+        //     chatHistorySidebar.classList.remove('open');
+        // });
 
         // --- Initial Setup on DOM Load ---
         document.addEventListener('DOMContentLoaded', () => {
@@ -1444,10 +1200,10 @@
                     sendButton.disabled = false;
                     messageInputArea.classList.remove('pointer-events-none', 'opacity-50'); // Ensure input is enabled
 
-                    toggleSidebarBtn.classList.remove('hidden'); // Show sidebar toggle
-                    chatHistorySidebar.classList.remove('hidden'); // Show sidebar container
-                    
-                    await loadChatThreads(user.uid); // Load user's chat threads
+                    // Removed sidebar and new chat button UI adjustments for logged-in users
+                    // toggleSidebarBtn.classList.remove('hidden');
+                    // chatHistorySidebar.classList.remove('hidden');
+                    // await loadChatThreads(user.uid); // Removed: Load user's chat threads
 
                 } else {
                     // Guest user
@@ -1455,8 +1211,9 @@
                     loginButton.classList.remove('hidden');
                     userAvatarDiv.classList.add('hidden');
                     logoutButton.classList.add('hidden');
-                    toggleSidebarBtn.classList.add('hidden'); // Hide sidebar toggle
-                    chatHistorySidebar.classList.add('hidden'); // Hide sidebar container
+                    // Removed sidebar UI adjustments for guest users
+                    // toggleSidebarBtn.classList.add('hidden');
+                    // chatHistorySidebar.classList.add('hidden');
 
                     guestMessageCount = parseInt(localStorage.getItem('guestMessageCount') || '0');
                     if (guestMessageCount >= MAX_GUEST_MESSAGES) {
