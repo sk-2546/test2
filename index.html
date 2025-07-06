@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StreamVibe - Music & Video Streaming</title>
+    <title>StreamVibe - Video Streaming</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -30,20 +30,10 @@
                         <circle cx="11" cy="11" r="8"></circle>
                         <path d="m21 21-4.35-4.35"></path>
                     </svg>
-                    <input type="text" id="searchInput" placeholder="Search tracks..." />
+                    <input type="text" id="searchInput" placeholder="Search videos..." />
                 </div>
             </div>
-
-            <div class="mode-toggle">
-                <button id="modeToggle" class="mode-btn">
-                    <svg class="mode-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M9 18V5l12-2v13"></path>
-                        <circle cx="6" cy="18" r="3"></circle>
-                        <circle cx="18" cy="16" r="3"></circle>
-                    </svg>
-                    <span class="mode-text">Audio Mode</span>
-                </button>
-            </div>
+            <!-- Removed mode toggle as only video mode is available -->
         </div>
     </header>
 
@@ -51,11 +41,11 @@
     <main class="main-content">
         <div class="playlist-container">
             <div class="playlist-header">
-                <h2>Playlist</h2>
-                <p id="trackCount">21 tracks</p>
+                <h2>Video Playlist</h2>
+                <p id="trackCount">21 videos</p>
             </div>
             <div class="playlist" id="playlist">
-                <!-- Tracks will be dynamically loaded here -->
+                <!-- Videos will be dynamically loaded here -->
             </div>
         </div>
     </main>
@@ -64,15 +54,16 @@
     <div class="bottom-player" id="bottomPlayer">
         <div class="player-info">
             <div class="track-thumbnail">
+                <!-- Using a video icon for thumbnail -->
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M9 18V5l12-2v13"></path>
-                    <circle cx="6" cy="18" r="3"></circle>
-                    <circle cx="18" cy="16" r="3"></circle>
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                    <line x1="12" y1="17" x2="12" y2="21"></line>
                 </svg>
             </div>
             <div class="track-details">
-                <div class="track-title" id="currentTitle">Select a track</div>
-                <div class="track-artist" id="currentArtist">No track selected</div>
+                <div class="track-title" id="currentTitle">Select a video</div>
+                <div class="track-artist" id="currentArtist">No video selected</div>
             </div>
         </div>
 
@@ -122,18 +113,10 @@
 
         <div class="fullscreen-content">
             <div class="video-container" id="videoContainer">
-                <iframe id="videoPlayer" frameborder="0" allowfullscreen></iframe>
+                <!-- YouTube Iframe Player will be loaded here -->
+                <div id="youtubePlayer"></div>
             </div>
-            
-            <div class="audio-visualizer" id="audioVisualizer">
-                <div class="vinyl-record">
-                    <div class="vinyl-center"></div>
-                </div>
-                <div class="track-info-large">
-                    <h2 id="fullscreenTitle">Track Title</h2>
-                    <p id="fullscreenArtist">Artist Name</p>
-                </div>
-            </div>
+            <!-- Removed audio visualizer as only video mode is available -->
         </div>
 
         <div class="fullscreen-controls">
@@ -182,5 +165,7 @@
     </div>
 
     <script src="script.js"></script>
+    <!-- YouTube IFrame Player API script -->
+    <script src="https://www.youtube.com/iframe_api"></script>
 </body>
 </html>

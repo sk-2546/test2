@@ -1,173 +1,168 @@
-// Music data
-const tracks = [
+// Video data (renamed from tracks for clarity)
+const videos = [
     {
         id: "1",
         title: "Jason Derulo - Swalla (feat. Nicki Minaj & Ty Dolla $ign)",
-        embedUrl: "NGLxoKOvzu4", // Changed to just video ID
+        youtubeId: "NGLxoKOvzu4", // YouTube video ID
         artist: "Jason Derulo",
         duration: "3:46"
     },
     {
         id: "2",
         title: "Luis Fonsi - Despacito ft. Daddy Yankee",
-        embedUrl: "kJQP7kiw5Fk",
+        youtubeId: "kJQP7kiw5Fk",
         artist: "Luis Fonsi",
         duration: "4:42"
     },
     {
         id: "3",
         title: "PSY - GANGNAM STYLE",
-        embedUrl: "9bZkp7q19f0",
+        youtubeId: "9bZkp7q19f0",
         artist: "PSY",
         duration: "4:13"
     },
     {
         id: "4",
         title: "Ritviz - Liggi",
-        embedUrl: "6BYIKEH0RCQ",
+        youtubeId: "6BYIKEH0RCQ",
         artist: "Ritviz",
         duration: "3:28"
     },
     {
         id: "5",
         title: "Coke Studio Bharat | Khalasi | Aditya Gadhvi x Achint",
-        embedUrl: "t7wSjy9Lv-o",
+        youtubeId: "t7wSjy9Lv-o",
         artist: "Aditya Gadhvi",
         duration: "4:15"
     },
     {
         id: "6",
         title: "Illuminati | Aavesham",
-        embedUrl: "tOM-nWPcR4U",
+        youtubeId: "tOM-nWPcR4U",
         artist: "Aavesham",
         duration: "3:52"
     },
     {
         id: "7",
         title: "Aasa Kooda – Thejo Bharathwaj",
-        embedUrl: "a3Ue-LN5B9U",
+        youtubeId: "a3Ue-LN5B9U",
         artist: "Thejo Bharathwaj",
         duration: "4:01"
     },
     {
         id: "8",
         title: "Achacho - Aranmanai 4",
-        embedUrl: "ijBxe70sd8M",
+        youtubeId: "ijBxe70sd8M",
         artist: "Aranmanai 4",
         duration: "3:33"
     },
     {
         id: "9",
         title: "Chuttamalle - Devara",
-        embedUrl: "GWNrPJyRTcA",
+        youtubeId: "GWNrPJyRTcA",
         artist: "Devara",
         duration: "4:18"
     },
     {
         id: "10",
         title: "Ed Sheeran - Shape of You",
-        embedUrl: "JGwWNGJdvx8",
+        youtubeId: "JGwWNGJdvx8",
         artist: "Ed Sheeran",
         duration: "3:53"
     },
     {
         id: "11",
         title: "J Balvin, Willy William - Mi Gente",
-        embedUrl: "wnJ6LuUFpMo",
+        youtubeId: "wnJ6LuUFpMo",
         artist: "J Balvin",
         duration: "3:07"
     },
     {
         id: "12",
         title: "MC Fioti - Bum Bum Tam Tam",
-        embedUrl: "_P7S2lKif-A",
+        youtubeId: "_P7S2lKif-A",
         artist: "MC Fioti",
         duration: "2:49"
     },
     {
         id: "13",
         title: "DJ Snake, Lil Jon - Turn Down for What",
-        embedUrl: "HMUDVMiITOU",
+        youtubeId: "HMUDVMiITOU",
         artist: "DJ Snake",
         duration: "3:36"
     },
     {
         id: "14",
         title: "Vidya Vox - Be Free (Pallivaalu Bhadravattakam)",
-        embedUrl: "eiGdsH1g20k",
+        youtubeId: "eiGdsH1g20k",
         artist: "Vidya Vox",
         duration: "4:25"
     },
     {
         id: "15",
         title: "Manike Mage Hithe – Yohani & Satheeshan",
-        embedUrl: "PgCliOxl41o",
+        youtubeId: "PgCliOxl41o",
         artist: "Yohani",
         duration: "3:41"
     },
     {
         id: "16",
         title: "Dhanda Nyoliwala - Russian Bandana",
-        embedUrl: "1OAjeECW90E",
+        youtubeId: "1OAjeECW90E",
         artist: "Dhanda Nyoliwala",
         duration: "3:15"
     },
     {
         id: "17",
         title: "Excuses – AP Dhillon",
-        embedUrl: "vX2cDW8LUWk",
+        youtubeId: "vX2cDW8LUWk",
         artist: "AP Dhillon",
         duration: "3:22"
     },
     {
         id: "18",
         title: "Tesher x Jason Derulo - Jalebi Baby",
-        embedUrl: "CTmKrwFu7wg",
+        youtubeId: "CTmKrwFu7wg",
         artist: "Tesher",
         duration: "2:48"
     },
     {
         id: "19",
         title: "Marshmello x Pritam - BIBA",
-        embedUrl: "UhYRlI_bpJQ",
+        youtubeId: "UhYRlI_bpJQ",
         artist: "Marshmello",
         duration: "3:54"
     },
     {
         id: "20",
         title: "Ed Sheeran - Sapphire",
-        embedUrl: "JgDNFQ2RaLQ",
+        youtubeId: "JgDNFQ2RaLQ",
         artist: "Ed Sheeran",
         duration: "4:07"
     },
     {
         id: "21",
         title: "Tum Tum - Enemy (Tamil)",
-        embedUrl: "tYSrY4iPX6w",
+        youtubeId: "tYSrY4iPX6w",
         artist: "Enemy",
         duration: "3:29"
     }
 ];
 
 // Global state
-let currentTrack = null;
+let currentVideo = null;
 let isPlaying = false;
-let isVideoMode = false; // Initial mode is audio
-let filteredTracks = [...tracks];
-let currentTrackIndex = -1;
-let progressInterval = null;
-
-// YouTube Player API variables
-let player;
-let playerReady = false;
+let filteredVideos = [...videos];
+let currentVideoIndex = -1;
+let progressUpdateInterval = null; // Renamed for clarity
+let player; // YouTube Player object
 
 // DOM elements
 const playlist = document.getElementById('playlist');
 const searchInput = document.getElementById('searchInput');
-const modeToggle = document.getElementById('modeToggle');
 const bottomPlayer = document.getElementById('bottomPlayer');
 const fullscreenPlayer = document.getElementById('fullscreenPlayer');
-const trackCount = document.getElementById('trackCount');
+const trackCount = document.getElementById('trackCount'); // Renamed to videoCount in HTML, but keeping for now
 
 // Bottom player elements
 const currentTitle = document.getElementById('currentTitle');
@@ -179,163 +174,141 @@ const fullscreenBtn = document.getElementById('fullscreenBtn');
 
 // Fullscreen player elements
 const closeBtn = document.getElementById('closeBtn');
-const videoContainer = document.getElementById('videoContainer');
-const audioVisualizer = document.getElementById('audioVisualizer');
-const videoPlayerIframe = document.getElementById('videoPlayer'); // Renamed to avoid conflict with player object
+const youtubePlayerDiv = document.getElementById('youtubePlayer'); // The div where YouTube player will be embedded
 const fullscreenTitle = document.getElementById('fullscreenTitle');
 const fullscreenArtist = document.getElementById('fullscreenArtist');
 const fsPlayBtn = document.getElementById('fsPlayBtn');
 const fsPrevBtn = document.getElementById('fsPrevBtn');
 const fsNextBtn = document.getElementById('fsNextBtn');
 const progressFill = document.getElementById('progressFill');
-const progressContainer = document.querySelector('.progress-bar'); // Get the progress bar container
-const currentTimeDisplay = document.getElementById('currentTime');
-const totalTimeDisplay = document.getElementById('totalTime');
+const currentTimeElement = document.getElementById('currentTime'); // Renamed to avoid conflict
+const totalTimeElement = document.getElementById('totalTime'); // Renamed to avoid conflict
 const volumeSlider = document.getElementById('volumeSlider');
+
+// This function will be called by the YouTube IFrame Player API when it's ready
+function onYouTubeIframeAPIReady() {
+    // Initialize the app after the YouTube API is ready
+    init();
+}
 
 // Initialize the app
 function init() {
     renderPlaylist();
     setupEventListeners();
-    updateTrackCount();
-    loadYouTubeAPI(); // Load YouTube IFrame API
-}
-
-// Load YouTube IFrame Player API
-function loadYouTubeAPI() {
-    const tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-}
-
-// This function is called by the YouTube IFrame Player API when the API is ready.
-window.onYouTubeIframeAPIReady = function() {
-    player = new YT.Player('videoPlayer', {
-        height: '100%',
-        width: '100%',
-        videoId: '', // Will be set dynamically
-        playerVars: {
-            'playsinline': 1,
-            'autoplay': 0,
-            'controls': 1,
-            'showinfo': 0,
-            'rel': 0,
-            'modestbranding': 1
-        },
-        events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
-        }
-    });
-}
-
-function onPlayerReady(event) {
-    playerReady = true;
-    // Set initial volume
-    player.setVolume(volumeSlider.value);
-    if (currentTrack) {
-        // If a track is already selected, load it
-        player.loadVideoById(currentTrack.embedUrl);
-        if (isPlaying) {
-            player.playVideo();
-        }
-    }
-}
-
-function onPlayerStateChange(event) {
-    // YT.PlayerState.ENDED, YT.PlayerState.PLAYING, YT.PlayerState.PAUSED, YT.PlayerState.BUFFERING, YT.PlayerState.CUED
-    if (event.data === YT.PlayerState.PLAYING) {
-        isPlaying = true;
-        startProgress();
-    } else {
-        isPlaying = false;
-        stopProgress();
-    }
-    updatePlayButton();
-    updateFullscreenPlayButton();
-
-    if (event.data === YT.PlayerState.ENDED) {
-        playNext();
-    }
+    updateTrackCount(); // Still using trackCount for now
 }
 
 // Render playlist
 function renderPlaylist() {
     playlist.innerHTML = '';
-
-    filteredTracks.forEach(track => {
-        const trackElement = document.createElement('div');
-        trackElement.className = `track-item ${currentTrack?.id === track.id ? 'active' : ''}`;
-        trackElement.innerHTML = `
+    
+    filteredVideos.forEach(video => {
+        const videoElement = document.createElement('div');
+        videoElement.className = `track-item ${currentVideo?.id === video.id ? 'active' : ''}`;
+        videoElement.innerHTML = `
             <div class="track-thumbnail">
+                <!-- Video icon for thumbnail -->
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M9 18V5l12-2v13"></path>
-                    <circle cx="6" cy="18" r="3"></circle>
-                    <circle cx="18" cy="16" r="3"></circle>
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                    <line x1="12" y1="17" x2="12" y2="21"></line>
                 </svg>
             </div>
             <div class="track-info">
-                <div class="track-title">${track.title}</div>
-                <div class="track-artist">${track.artist}</div>
+                <div class="track-title">${video.title}</div>
+                <div class="track-artist">${video.artist}</div>
             </div>
-            <div class="track-duration">${track.duration}</div>
+            <div class="track-duration">${video.duration}</div>
         `;
-
-        trackElement.addEventListener('click', () => selectTrack(track));
-        playlist.appendChild(trackElement);
+        
+        videoElement.addEventListener('click', () => selectVideo(video));
+        playlist.appendChild(videoElement);
     });
 }
 
-// Select and play track
-function selectTrack(track) {
-    currentTrack = track;
-    currentTrackIndex = filteredTracks.findIndex(t => t.id === track.id);
-    isPlaying = true; // Assume playing when a new track is selected
+// Select and play video
+function selectVideo(video) {
+    currentVideo = video;
+    currentVideoIndex = filteredVideos.findIndex(v => v.id === video.id);
+    isPlaying = true; // Assume playing when selected
 
     updateBottomPlayer();
     updateFullscreenPlayer();
     renderPlaylist();
     showBottomPlayer();
-    openFullscreen(); // Open fullscreen immediately on track selection
-
-    if (playerReady) {
-        // Always load the video, regardless of current mode.
-        // Its visibility will be controlled by updateFullscreenPlayer and toggleMode.
-        player.loadVideoById(currentTrack.embedUrl);
-        // If in video mode, play immediately. Otherwise, it will be cued.
-        if (isVideoMode) {
-            player.playVideo();
-        } else {
-            // If in audio mode, ensure video is paused/stopped but loaded
-            player.pauseVideo();
-        }
+    openFullscreen();
+    
+    // Load the video into the YouTube player
+    if (player) {
+        player.loadVideoById(currentVideo.youtubeId);
+    } else {
+        // Create the YouTube player if it doesn't exist
+        player = new YT.Player('youtubePlayer', {
+            videoId: currentVideo.youtubeId,
+            playerVars: {
+                autoplay: 1, // Autoplay the video
+                controls: 1, // Show player controls
+                modestbranding: 1, // Hide YouTube logo
+                rel: 0 // Do not show related videos
+            },
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
+            }
+        });
     }
+}
+
+// YouTube Player ready event
+function onPlayerReady(event) {
+    event.target.playVideo();
+    updatePlayButton();
+    updateFullscreenPlayButton();
+    startProgressUpdate();
+    setVolume(volumeSlider.value); // Set initial volume
+}
+
+// YouTube Player state change event
+function onPlayerStateChange(event) {
+    // YT.PlayerState.ENDED, YT.PlayerState.PLAYING, YT.PlayerState.PAUSED, YT.PlayerState.BUFFERING, YT.PlayerState.CUED
+    if (event.data === YT.PlayerState.PLAYING) {
+        isPlaying = true;
+        updatePlayButton();
+        updateFullscreenPlayButton();
+        startProgressUpdate();
+    } else if (event.data === YT.PlayerState.PAUSED) {
+        isPlaying = false;
+        updatePlayButton();
+        updateFullscreenPlayButton();
+        stopProgressUpdate();
+    } else if (event.data === YT.PlayerState.ENDED) {
+        isPlaying = false;
+        updatePlayButton();
+        updateFullscreenPlayButton();
+        stopProgressUpdate();
+        playNext(); // Play next video when current one ends
+    } else if (event.data === YT.PlayerState.BUFFERING) {
+        // Handle buffering state if needed
+    }
+    // Note: Ad handling is managed by YouTube. We cannot directly control or detect ads within the iframe.
+    // The video will play directly after any pre-roll ads (if present) are finished by YouTube.
 }
 
 // Update bottom player
 function updateBottomPlayer() {
-    if (currentTrack) {
-        currentTitle.textContent = currentTrack.title;
-        currentArtist.textContent = currentTrack.artist;
+    if (currentVideo) {
+        currentTitle.textContent = currentVideo.title;
+        currentArtist.textContent = currentVideo.artist;
         updatePlayButton();
     }
 }
 
 // Update fullscreen player
 function updateFullscreenPlayer() {
-    if (currentTrack) {
-        fullscreenTitle.textContent = currentTrack.title;
-        fullscreenArtist.textContent = currentTrack.artist;
-        totalTimeDisplay.textContent = currentTrack.duration; // Display static duration for now
-
-        if (isVideoMode) {
-            videoContainer.style.display = 'block';
-            audioVisualizer.style.display = 'none';
-        } else {
-            videoContainer.style.display = 'none';
-            audioVisualizer.style.display = 'block';
-        }
+    if (currentVideo) {
+        fullscreenTitle.textContent = currentVideo.title;
+        fullscreenArtist.textContent = currentVideo.artist;
+        totalTimeElement.textContent = currentVideo.duration; // Display total duration from data
         updateFullscreenPlayButton();
     }
 }
@@ -344,7 +317,7 @@ function updateFullscreenPlayer() {
 function updatePlayButton() {
     const playIcon = playBtn.querySelector('.play-icon');
     const pauseIcon = playBtn.querySelector('.pause-icon');
-
+    
     if (isPlaying) {
         playIcon.classList.add('hidden');
         pauseIcon.classList.remove('hidden');
@@ -357,7 +330,7 @@ function updatePlayButton() {
 function updateFullscreenPlayButton() {
     const playIcon = fsPlayBtn.querySelector('.play-icon');
     const pauseIcon = fsPlayBtn.querySelector('.pause-icon');
-
+    
     if (isPlaying) {
         playIcon.classList.add('hidden');
         pauseIcon.classList.remove('hidden');
@@ -380,196 +353,156 @@ function hideBottomPlayer() {
 function openFullscreen() {
     fullscreenPlayer.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
-    // Ensure the player state is correct when opening fullscreen
-    if (currentTrack && playerReady) {
-        if (isVideoMode) {
-            player.playVideo();
-        } else {
-            player.pauseVideo(); // Keep paused if in audio mode
-        }
+    // Ensure the player is playing when fullscreen is opened
+    if (player && !isPlaying) {
+        player.playVideo();
     }
 }
 
 function closeFullscreen() {
     fullscreenPlayer.classList.add('hidden');
     document.body.style.overflow = 'auto';
-    if (playerReady) {
-        player.stopVideo(); // Stop the video when closing fullscreen
+    if (player) {
+        player.stopVideo(); // Stop video when closing fullscreen
     }
-    stopProgress(); // Stop progress update when closing fullscreen
+    isPlaying = false;
+    updatePlayButton();
+    updateFullscreenPlayButton();
+    stopProgressUpdate();
+    // Reset progress bar
+    progressFill.style.width = '0%';
+    currentTimeElement.textContent = '0:00';
 }
 
 // Play/pause functionality
 function togglePlayPause() {
-    if (!playerReady || !currentTrack) return;
+    if (!currentVideo) return; // Do nothing if no video is selected
 
-    if (isPlaying) {
-        player.pauseVideo();
-    } else {
-        player.playVideo();
+    if (player) {
+        if (isPlaying) {
+            player.pauseVideo();
+        } else {
+            player.playVideo();
+        }
     }
-    // isPlaying state will be updated by onPlayerStateChange
+    // State will be updated by onPlayerStateChange
 }
 
 // Navigation
 function playNext() {
-    if (filteredTracks.length === 0) return;
-    currentTrackIndex = (currentTrackIndex + 1) % filteredTracks.length;
-    selectTrack(filteredTracks[currentTrackIndex]);
+    if (currentVideoIndex < filteredVideos.length - 1) {
+        selectVideo(filteredVideos[currentVideoIndex + 1]);
+    } else {
+        // Optionally loop back to the first video or stop
+        selectVideo(filteredVideos[0]); // Loop back to the first video
+    }
 }
 
 function playPrevious() {
-    if (filteredTracks.length === 0) return;
-    currentTrackIndex = (currentTrackIndex - 1 + filteredTracks.length) % filteredTracks.length;
-    selectTrack(filteredTracks[currentTrackIndex]);
+    if (currentVideoIndex > 0) {
+        selectVideo(filteredVideos[currentVideoIndex - 1]);
+    } else {
+        // Optionally loop to the last video or stop
+        selectVideo(filteredVideos[filteredVideos.length - 1]); // Loop to the last video
+    }
 }
 
-// Progress tracking with YouTube API
-function startProgress() {
-    stopProgress(); // Clear any existing interval
-    if (playerReady && player.getDuration) {
-        progressInterval = setInterval(() => {
+// Progress update from YouTube Player
+function startProgressUpdate() {
+    stopProgressUpdate(); // Clear any existing interval
+    progressUpdateInterval = setInterval(() => {
+        if (player && player.getPlayerState() === YT.PlayerState.PLAYING) {
             const duration = player.getDuration();
             const currentTime = player.getCurrentTime();
-            if (duration > 0) {
-                const progress = (currentTime / duration) * 100;
-                progressFill.style.width = progress + '%';
-                currentTimeDisplay.textContent = formatTime(currentTime);
-                totalTimeDisplay.textContent = formatTime(duration);
-            }
-        }, 1000); // Update every second
+            const progress = (currentTime / duration) * 100;
+            progressFill.style.width = progress + '%';
+            
+            currentTimeElement.textContent = formatTime(currentTime);
+            totalTimeElement.textContent = formatTime(duration);
+        }
+    }, 1000); // Update every second
+}
+
+function stopProgressUpdate() {
+    if (progressUpdateInterval) {
+        clearInterval(progressUpdateInterval);
+        progressUpdateInterval = null;
     }
 }
 
-function stopProgress() {
-    if (progressInterval) {
-        clearInterval(progressInterval);
-        progressInterval = null;
-    }
-}
-
-// Format time for display (MM:SS)
 function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = Math.floor(seconds % 60);
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
 }
 
-// Handle progress bar clicks to seek
-progressContainer.addEventListener('click', (e) => {
-    if (!playerReady || !currentTrack) return;
-
-    const progressBarWidth = progressContainer.clientWidth;
-    const clickX = e.offsetX;
-    const seekPercentage = (clickX / progressBarWidth);
-    const duration = player.getDuration();
-    if (duration > 0) {
-        const seekTime = duration * seekPercentage;
-        player.seekTo(seekTime, true);
+// Volume control
+function setVolume(volume) {
+    if (player) {
+        player.setVolume(volume);
     }
-});
-
+}
 
 // Search functionality
 function handleSearch() {
     const query = searchInput.value.toLowerCase();
-    filteredTracks = tracks.filter(track =>
-        track.title.toLowerCase().includes(query) ||
-        track.artist.toLowerCase().includes(query)
+    filteredVideos = videos.filter(video =>
+        video.title.toLowerCase().includes(query) ||
+        video.artist.toLowerCase().includes(query)
     );
     renderPlaylist();
     updateTrackCount();
 }
 
-// Mode toggle
-function toggleMode() {
-    isVideoMode = !isVideoMode;
-    const modeIcon = modeToggle.querySelector('.mode-icon');
-    const modeText = modeToggle.querySelector('.mode-text');
-
-    if (isVideoMode) {
-        modeToggle.classList.add('video-mode');
-        modeIcon.innerHTML = `
-            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-            <line x1="8" y1="21" x2="16" y2="21"></line>
-            <line x1="12" y1="17" x2="12" y2="21"></line>
-        `;
-        modeText.textContent = 'Video Mode';
-    } else {
-        modeToggle.classList.remove('video-mode');
-        modeIcon.innerHTML = `
-            <path d="M9 18V5l12-2v13"></path>
-            <circle cx="6" cy="18" r="3"></circle>
-            <circle cx="18" cy="16" r="3"></circle>
-        `;
-        modeText.textContent = 'Audio Mode';
-    }
-
-    if (currentTrack) {
-        updateFullscreenPlayer(); // Update display based on new mode
-        if (playerReady) {
-            if (isVideoMode) {
-                player.playVideo(); // If switching to video mode, play the video
-            } else {
-                player.pauseVideo(); // If switching to audio mode, pause the video
-            }
-        }
-    }
-}
-
-// Update track count
+// Update track count (renamed to video count in HTML, but keeping for now)
 function updateTrackCount() {
-    trackCount.textContent = `${filteredTracks.length} tracks`;
+    trackCount.textContent = `${filteredVideos.length} videos`;
 }
 
 // Setup event listeners
 function setupEventListeners() {
     // Search
     searchInput.addEventListener('input', handleSearch);
-
-    // Mode toggle
-    modeToggle.addEventListener('click', toggleMode);
-
+    
     // Bottom player controls
     playBtn.addEventListener('click', togglePlayPause);
     prevBtn.addEventListener('click', playPrevious);
     nextBtn.addEventListener('click', playNext);
     fullscreenBtn.addEventListener('click', openFullscreen);
-
+    
     // Fullscreen player controls
     closeBtn.addEventListener('click', closeFullscreen);
     fsPlayBtn.addEventListener('click', togglePlayPause);
     fsPrevBtn.addEventListener('click', playPrevious);
     fsNextBtn.addEventListener('click', playNext);
-
+    
     // Volume control
     volumeSlider.addEventListener('input', (e) => {
-        if (playerReady) {
-            player.setVolume(e.target.value);
-        }
+        setVolume(e.target.value);
     });
-
+    
     // Keyboard shortcuts
     document.addEventListener('keydown', (e) => {
-        if (e.code === 'Space' && currentTrack) {
+        if (e.code === 'Space' && currentVideo) {
             e.preventDefault();
             togglePlayPause();
         } else if (e.code === 'Escape') {
             closeFullscreen();
-        } else if (e.code === 'ArrowRight' && currentTrack) {
+        } else if (e.code === 'ArrowRight' && currentVideo) {
             playNext();
-        } else if (e.code === 'ArrowLeft' && currentTrack) {
+        } else if (e.code === 'ArrowLeft' && currentVideo) {
             playPrevious();
         }
     });
-
+    
     // Close fullscreen when clicking outside
     fullscreenPlayer.addEventListener('click', (e) => {
+        // Check if the click target is the fullscreen player itself, not its children
         if (e.target === fullscreenPlayer) {
             closeFullscreen();
         }
     });
 }
 
-// Initialize the app when DOM is loaded
-document.addEventListener('DOMContentLoaded', init);
+// The init function is now called by onYouTubeIframeAPIReady
+// document.addEventListener('DOMContentLoaded', init); // Removed as YouTube API handles init

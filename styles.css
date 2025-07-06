@@ -97,28 +97,7 @@ body {
     box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
 }
 
-.mode-btn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 16px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    color: white;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.mode-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
-}
-
-.mode-btn.video-mode {
-    background: linear-gradient(135deg, #8b5cf6, #ec4899);
-    border-color: transparent;
-}
+/* Removed mode-btn styles as it's no longer needed */
 
 /* Main Content */
 .main-content {
@@ -386,8 +365,6 @@ body {
     align-items: center;
     justify-content: center;
     padding: 0 40px;
-    /* Added for smooth transitions between video and audio modes */
-    transition: all 0.3s ease-in-out;
 }
 
 .video-container {
@@ -397,60 +374,16 @@ body {
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-    /* Added for smooth transitions */
-    transition: all 0.3s ease-in-out;
 }
 
-.video-container iframe {
+/* Changed to use the div for YouTube Player */
+#youtubePlayer {
     width: 100%;
     height: 100%;
 }
 
-.audio-visualizer {
-    text-align: center;
-    max-width: 600px;
-    /* Added for smooth transitions */
-    transition: all 0.3s ease-in-out;
-}
-
-.vinyl-record {
-    width: 300px;
-    height: 300px;
-    background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
-    border-radius: 50%;
-    margin: 0 auto 40px;
-    position: relative;
-    animation: spin 8s linear infinite;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-}
-
-.vinyl-center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, #8b5cf6, #ec4899);
-    border-radius: 50%;
-}
-
-.vinyl-center::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 20px;
-    height: 20px;
-    background: #000;
-    border-radius: 50%;
-}
-
-@keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
+/* Removed audio-visualizer and related styles */
+/* .audio-visualizer, .vinyl-record, .vinyl-center, @keyframes spin { ... } */
 
 .track-info-large h2 {
     font-size: 36px;
@@ -484,14 +417,13 @@ body {
     border-radius: 3px;
     overflow: hidden;
     margin-bottom: 12px;
-    cursor: pointer; /* Added cursor for clickability */
 }
 
 .progress-fill {
     height: 100%;
     background: linear-gradient(135deg, #8b5cf6, #ec4899);
     width: 0%;
-    transition: width 0.1s linear; /* Changed to linear for smoother progress */
+    transition: width 0.3s ease;
 }
 
 .time-info {
@@ -587,88 +519,83 @@ body {
         padding: 0 16px;
         height: 60px;
     }
-
+    
     .logo h1 {
         font-size: 20px;
     }
-
+    
     .search-container {
         margin: 0 20px;
     }
-
-    .mode-text {
-        display: none;
-    }
-
+    
+    /* Removed mode-text display none as mode button is removed */
+    
     .main-content {
         padding: 20px 16px 120px;
     }
-
+    
     .playlist-container {
         padding: 20px;
     }
-
+    
     .playlist-header h2 {
         font-size: 24px;
     }
-
+    
     .track-item {
         padding: 12px;
         gap: 12px;
     }
-
+    
     .track-thumbnail {
         width: 50px;
         height: 50px;
     }
-
+    
     .track-title {
         font-size: 14px;
     }
-
+    
     .track-artist {
         font-size: 12px;
     }
-
+    
     .bottom-player {
         padding: 12px 16px;
         gap: 12px;
     }
-
+    
     .player-controls {
         gap: 12px;
     }
-
+    
     .play-btn {
         width: 40px;
         height: 40px;
     }
-
+    
     .fullscreen-content {
         padding: 0 20px;
     }
-
-    .vinyl-record {
-        width: 200px;
-        height: 200px;
-    }
-
+    
+    /* Removed vinyl-record styles */
+    
     .track-info-large h2 {
         font-size: 24px;
     }
-
+    
     .track-info-large p {
         font-size: 16px;
     }
-
+    
     .fullscreen-controls {
         padding: 20px;
     }
-
+    
     .control-buttons {
         gap: 20px;
     }
-
+    
     .fs-play-btn {
         width: 60px;
         height: 60px;
@@ -679,24 +606,21 @@ body {
     .search-container {
         display: none;
     }
-
+    
     .track-duration {
         display: none;
     }
-
+    
     .player-extras {
         display: none;
     }
-
-    .vinyl-record {
-        width: 150px;
-        height: 150px;
-    }
-
+    
+    /* Removed vinyl-record styles */
+    
     .track-info-large h2 {
         font-size: 20px;
     }
-
+    
     .track-info-large p {
         font-size: 14px;
     }
@@ -707,7 +631,7 @@ body {
     .playlist {
         grid-template-columns: 1fr;
     }
-
+    
     .fullscreen-content {
         padding: 0 60px;
     }
@@ -719,7 +643,7 @@ body {
         grid-template-columns: repeat(2, 1fr);
         gap: 16px;
     }
-
+    
     .track-item {
         padding: 20px;
     }
