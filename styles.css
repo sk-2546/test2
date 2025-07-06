@@ -386,6 +386,8 @@ body {
     align-items: center;
     justify-content: center;
     padding: 0 40px;
+    /* Added for smooth transitions between video and audio modes */
+    transition: all 0.3s ease-in-out;
 }
 
 .video-container {
@@ -395,6 +397,8 @@ body {
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    /* Added for smooth transitions */
+    transition: all 0.3s ease-in-out;
 }
 
 .video-container iframe {
@@ -405,6 +409,8 @@ body {
 .audio-visualizer {
     text-align: center;
     max-width: 600px;
+    /* Added for smooth transitions */
+    transition: all 0.3s ease-in-out;
 }
 
 .vinyl-record {
@@ -478,13 +484,14 @@ body {
     border-radius: 3px;
     overflow: hidden;
     margin-bottom: 12px;
+    cursor: pointer; /* Added cursor for clickability */
 }
 
 .progress-fill {
     height: 100%;
     background: linear-gradient(135deg, #8b5cf6, #ec4899);
     width: 0%;
-    transition: width 0.3s ease;
+    transition: width 0.1s linear; /* Changed to linear for smoother progress */
 }
 
 .time-info {
@@ -580,88 +587,88 @@ body {
         padding: 0 16px;
         height: 60px;
     }
-    
+
     .logo h1 {
         font-size: 20px;
     }
-    
+
     .search-container {
         margin: 0 20px;
     }
-    
+
     .mode-text {
         display: none;
     }
-    
+
     .main-content {
         padding: 20px 16px 120px;
     }
-    
+
     .playlist-container {
         padding: 20px;
     }
-    
+
     .playlist-header h2 {
         font-size: 24px;
     }
-    
+
     .track-item {
         padding: 12px;
         gap: 12px;
     }
-    
+
     .track-thumbnail {
         width: 50px;
         height: 50px;
     }
-    
+
     .track-title {
         font-size: 14px;
     }
-    
+
     .track-artist {
         font-size: 12px;
     }
-    
+
     .bottom-player {
         padding: 12px 16px;
         gap: 12px;
     }
-    
+
     .player-controls {
         gap: 12px;
     }
-    
+
     .play-btn {
         width: 40px;
         height: 40px;
     }
-    
+
     .fullscreen-content {
         padding: 0 20px;
     }
-    
+
     .vinyl-record {
         width: 200px;
         height: 200px;
     }
-    
+
     .track-info-large h2 {
         font-size: 24px;
     }
-    
+
     .track-info-large p {
         font-size: 16px;
     }
-    
+
     .fullscreen-controls {
         padding: 20px;
     }
-    
+
     .control-buttons {
         gap: 20px;
     }
-    
+
     .fs-play-btn {
         width: 60px;
         height: 60px;
@@ -672,24 +679,24 @@ body {
     .search-container {
         display: none;
     }
-    
+
     .track-duration {
         display: none;
     }
-    
+
     .player-extras {
         display: none;
     }
-    
+
     .vinyl-record {
         width: 150px;
         height: 150px;
     }
-    
+
     .track-info-large h2 {
         font-size: 20px;
     }
-    
+
     .track-info-large p {
         font-size: 14px;
     }
@@ -700,7 +707,7 @@ body {
     .playlist {
         grid-template-columns: 1fr;
     }
-    
+
     .fullscreen-content {
         padding: 0 60px;
     }
@@ -712,7 +719,7 @@ body {
         grid-template-columns: repeat(2, 1fr);
         gap: 16px;
     }
-    
+
     .track-item {
         padding: 20px;
     }
