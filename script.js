@@ -187,15 +187,18 @@ const volumeSlider = document.getElementById('volumeSlider');
 
 // This function will be called by the YouTube IFrame Player API when it's ready
 function onYouTubeIframeAPIReady() {
+    console.log('YouTube IFrame API is ready.');
     // Initialize the app after the YouTube API is ready
     init();
 }
 
 // Initialize the app
 function init() {
+    console.log('App initialization started.');
     renderPlaylist();
     setupEventListeners();
     updateTrackCount(); // Still using trackCount for now
+    console.log('App initialization finished.');
 }
 
 // Render playlist
@@ -224,10 +227,12 @@ function renderPlaylist() {
         videoElement.addEventListener('click', () => selectVideo(video));
         playlist.appendChild(videoElement);
     });
+    console.log('Playlist rendered.');
 }
 
 // Select and play video
 function selectVideo(video) {
+    console.log('selectVideo called for:', video.title);
     currentVideo = video;
     currentVideoIndex = filteredVideos.findIndex(v => v.id === video.id);
     isPlaying = true; // Assume playing when selected
@@ -236,12 +241,14 @@ function selectVideo(video) {
     updateFullscreenPlayer();
     renderPlaylist();
     showBottomPlayer();
-    openFullscreen();
-    
+    openFullscreen(); // This should make the fullscreen player visible
+
     // Load the video into the YouTube player
     if (player) {
+        console.log('Player already exists, loading video:', currentVideo.youtubeId);
         player.loadVideoById(currentVideo.youtubeId);
     } else {
+        console.log('Player does not exist, creating new player for video:', currentVideo.youtubeId);
         // Create the YouTube player if it doesn't exist
         player = new YT.Player('youtubePlayer', {
             videoId: currentVideo.youtubeId,
@@ -253,14 +260,17 @@ function selectVideo(video) {
             },
             events: {
                 'onReady': onPlayerReady,
-                'onStateChange': onPlayerStateChange
+                'onStateChange': onPlayerStateChange,
+                'onError': onPlayerError // Add error handling
             }
         });
+        console.log('New YouTube player instance created.');
     }
 }
 
 // YouTube Player ready event
 function onPlayerReady(event) {
+    console.log('YouTube Player is ready. Playing video.');
     event.target.playVideo();
     updatePlayButton();
     updateFullscreenPlayButton();
@@ -270,6 +280,7 @@ function onPlayerReady(event) {
 
 // YouTube Player state change event
 function onPlayerStateChange(event) {
+    console.log('Player state changed to:', event.data);
     // YT.PlayerState.ENDED, YT.PlayerState.PLAYING, YT.PlayerState.PAUSED, YT.PlayerState.BUFFERING, YT.PlayerState.CUED
     if (event.data === YT.PlayerState.PLAYING) {
         isPlaying = true;
@@ -289,9 +300,20 @@ function onPlayerStateChange(event) {
         playNext(); // Play next video when current one ends
     } else if (event.data === YT.PlayerState.BUFFERING) {
         // Handle buffering state if needed
+        console.log('Video is buffering...');
     }
     // Note: Ad handling is managed by YouTube. We cannot directly control or detect ads within the iframe.
     // The video will play directly after any pre-roll ads (if present) are finished by YouTube.
+}
+
+// YouTube Player error event
+function onPlayerError(event) {
+    console.error('YouTube Player Error:', event.data);
+    // You might want to display an error message to the user
+    // or try to play the next video.
+    // For example:
+    // alert('Error playing video. Please try another one.');
+    // playNext();
 }
 
 // Update bottom player
@@ -301,6 +323,7 @@ function updateBottomPlayer() {
         currentArtist.textContent = currentVideo.artist;
         updatePlayButton();
     }
+    console.log('Bottom player updated.');
 }
 
 // Update fullscreen player
@@ -311,6 +334,7 @@ function updateFullscreenPlayer() {
         totalTimeElement.textContent = currentVideo.duration; // Display total duration from data
         updateFullscreenPlayButton();
     }
+    console.log('Fullscreen player updated.');
 }
 
 // Update play buttons
@@ -343,16 +367,19 @@ function updateFullscreenPlayButton() {
 // Show/hide bottom player
 function showBottomPlayer() {
     bottomPlayer.classList.add('active');
+    console.log('Bottom player shown.');
 }
 
 function hideBottomPlayer() {
     bottomPlayer.classList.remove('active');
+    console.log('Bottom player hidden.');
 }
 
 // Open/close fullscreen
 function openFullscreen() {
     fullscreenPlayer.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
+    console.log('Fullscreen player opened.');
     // Ensure the player is playing when fullscreen is opened
     if (player && !isPlaying) {
         player.playVideo();
@@ -372,24 +399,33 @@ function closeFullscreen() {
     // Reset progress bar
     progressFill.style.width = '0%';
     currentTimeElement.textContent = '0:00';
+    console.log('Fullscreen player closed and video stopped.');
 }
 
 // Play/pause functionality
 function togglePlayPause() {
-    if (!currentVideo) return; // Do nothing if no video is selected
+    if (!currentVideo) {
+        console.warn('No video selected to play/pause.');
+        return; // Do nothing if no video is selected
+    }
 
     if (player) {
         if (isPlaying) {
             player.pauseVideo();
+            console.log('Video paused.');
         } else {
             player.playVideo();
+            console.log('Video played.');
         }
+    } else {
+        console.warn('YouTube player not initialized.');
     }
     // State will be updated by onPlayerStateChange
 }
 
 // Navigation
 function playNext() {
+    console.log('Attempting to play next video.');
     if (currentVideoIndex < filteredVideos.length - 1) {
         selectVideo(filteredVideos[currentVideoIndex + 1]);
     } else {
@@ -399,6 +435,7 @@ function playNext() {
 }
 
 function playPrevious() {
+    console.log('Attempting to play previous video.');
     if (currentVideoIndex > 0) {
         selectVideo(filteredVideos[currentVideoIndex - 1]);
     } else {
@@ -421,6 +458,7 @@ function startProgressUpdate() {
             totalTimeElement.textContent = formatTime(duration);
         }
     }, 1000); // Update every second
+    console.log('Progress update started.');
 }
 
 function stopProgressUpdate() {
@@ -428,6 +466,7 @@ function stopProgressUpdate() {
         clearInterval(progressUpdateInterval);
         progressUpdateInterval = null;
     }
+    console.log('Progress update stopped.');
 }
 
 function formatTime(seconds) {
@@ -440,6 +479,9 @@ function formatTime(seconds) {
 function setVolume(volume) {
     if (player) {
         player.setVolume(volume);
+        console.log('Volume set to:', volume);
+    } else {
+        console.warn('YouTube player not initialized for volume control.');
     }
 }
 
@@ -452,11 +494,13 @@ function handleSearch() {
     );
     renderPlaylist();
     updateTrackCount();
+    console.log('Search performed. Filtered videos count:', filteredVideos.length);
 }
 
 // Update track count (renamed to video count in HTML, but keeping for now)
 function updateTrackCount() {
     trackCount.textContent = `${filteredVideos.length} videos`;
+    console.log('Video count updated.');
 }
 
 // Setup event listeners
@@ -502,6 +546,7 @@ function setupEventListeners() {
             closeFullscreen();
         }
     });
+    console.log('Event listeners set up.');
 }
 
 // The init function is now called by onYouTubeIframeAPIReady
