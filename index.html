@@ -3,656 +3,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shubham GPT</title>
+    <title>StreamVibe - Music & Video Streaming</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Material Icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Custom CSS Variables for Professional Theming */
-        :root {
-            /* Light Mode Defaults - Professional, clean */
-            --bg-color: #f7f7f7;
-            --container-bg: #ffffff;
-            --header-bg: #ffffff;
-            --border-color: rgba(0, 0, 0, 0.08);
-            --text-color: #333333;
-            --input-bg: #ffffff;
-            --input-border: rgba(0, 0, 0, 0.12);
-            --placeholder-color: #888888;
-            --bot-message-bg: #f1f1f1;
-            --user-message-bg: #1e88e5;
-            --user-message-text: white;
-            --loading-text: #666666;
-            --loading-dots: #1e88e5;
-            --button-primary-bg: #22c55e;
-            --button-primary-hover: #16a34a;
-            --button-stop-bg: #ef4444;
-            --button-stop-hover: #dc2626;
-            --button-toggle-bg: #f3f4f6;
-            --button-toggle-hover: #e5e7eb;
-            --shadow-light: rgba(0, 0, 0, 0.08);
-            --shadow-medium: rgba(0, 0, 0, 0.12);
-            --highlight-bg: yellow;
-            --highlight-text: black;
-        }
-
-        .dark-mode {
-            --bg-color: #0f172a;
-            --container-bg: #1e293b;
-            --header-bg: #1e293b;
-            --border-color: rgba(255, 255, 255, 0.1);
-            --text-color: #e2e8f0;
-            --input-bg: #334155;
-            --input-border: rgba(255, 255, 255, 0.2);
-            --placeholder-color: #94a3b8;
-            --bot-message-bg: #334155;
-            --user-message-bg: #1e88e5;
-            --user-message-text: white;
-            --loading-text: #94a3b8;
-            --loading-dots: #1e88e5;
-            --button-primary-bg: #22c55e;
-            --button-primary-hover: #16a34a;
-            --button-stop-bg: #ef4444;
-            --button-stop-hover: #dc2626;
-            --button-toggle-bg: #475569;
-            --button-toggle-hover: #64748b;
-            --shadow-light: rgba(0, 0, 0, 0.3);
-            --shadow-medium: rgba(0, 0, 0, 0.4);
-            --highlight-bg: yellow;
-            --highlight-text: black;
-        }
-
-        /* Apply variables */
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            transition: all 0.3s ease;
-            line-height: 1.6;
-        }
-
-        .main-container {
-            background-color: var(--container-bg);
-            border: 1px solid var(--border-color);
-            box-shadow: 0 4px 6px -1px var(--shadow-light), 0 2px 4px -1px var(--shadow-medium);
-            transition: all 0.3s ease;
-            max-width: 720px;
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            margin: 0 auto;
-        }
-
-        /* Sticky Header */
-        .header {
-            background-color: var(--header-bg);
-            border-bottom: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-            padding: 16px 20px;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            backdrop-filter: blur(10px);
-        }
-
-        .logo {
-            font-size: 26px;
-            font-weight: 700;
-            color: var(--text-color);
-        }
-
-        .logo .gpt-text {
-            font-weight: 400;
-            opacity: 0.7;
-        }
-
-        /* Scrollable Chat Area */
-        .chat-area {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .chat-area::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .chat-area::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        .chat-area::-webkit-scrollbar-thumb {
-            background: var(--border-color);
-            border-radius: 3px;
-        }
-
-        .chat-area::-webkit-scrollbar-thumb:hover {
-            background: var(--placeholder-color);
-        }
-
-        /* Message Bubbles */
-        .message-bubble {
-            margin-bottom: 20px;
-            word-wrap: break-word;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInMessage 0.3s forwards;
-            font-size: 16px;
-            line-height: 1.6;
-        }
-
-        .user-message {
-            background-color: var(--user-message-bg);
-            color: var(--user-message-text);
-            align-self: flex-end;
-            max-width: 85%;
-            padding: 12px 16px;
-            border-radius: 14px;
-            border-bottom-right-radius: 4px;
-            box-shadow: 0 2px 4px var(--shadow-light);
-        }
-
-        .bot-message {
-            color: var(--text-color);
-            align-self: flex-start;
-            width: 100%;
-            text-align: left;
-            background: none;
-            box-shadow: none;
-            padding: 0;
-            border-radius: 0;
-        }
-
-        /* Sticky Input Bar */
-        .input-area {
-            background-color: var(--container-bg);
-            border-top: 1px solid var(--border-color);
-            padding: 16px 20px;
-            position: sticky;
-            bottom: 0;
-            backdrop-filter: blur(10px);
-        }
-
-        #userInput {
-            background-color: var(--input-bg);
-            border: 1px solid var(--input-border);
-            color: var(--text-color);
-            font-size: 16px;
-            padding: 12px 16px;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            resize: none;
-            font-family: inherit;
-            line-height: 1.5;
-            box-shadow: 0 1px 3px var(--shadow-light);
-        }
-
-        #userInput:focus {
-            outline: none;
-            border-color: #1e88e5;
-            box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.1);
-        }
-
-        #userInput::placeholder {
-            color: var(--placeholder-color);
-        }
-
-        /* Button Container for Fixed Position */
-        .button-container {
-            position: relative;
-            min-width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Send and Stop Buttons */
-        .action-button {
-            position: absolute;
-            background-color: var(--button-primary-bg);
-            color: white;
-            font-weight: 600;
-            font-size: 20px;
-            padding: 0;
-            border-radius: 12px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 4px var(--shadow-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 48px;
-            height: 48px;
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .action-button:hover {
-            background-color: var(--button-primary-hover);
-            transform: scale(1.05);
-            box-shadow: 0 4px 8px var(--shadow-medium);
-        }
-
-        .action-button.stop-style {
-            background-color: var(--button-stop-bg);
-        }
-
-        .action-button.stop-style:hover {
-            background-color: var(--button-stop-hover);
-        }
-
-        /* Button transition animations */
-        .action-button.hidden {
-            opacity: 0;
-            transform: scale(0.8);
-            pointer-events: none;
-        }
-
-        /* Material Icons styling */
-        .material-icons {
-            font-size: 22px !important;
-        }
-
-        /* Theme Toggle */
-        .theme-toggle {
-            background-color: var(--button-toggle-bg);
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-            padding: 8px 16px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .theme-toggle:hover {
-            background-color: var(--button-toggle-hover);
-        }
-
-        /* Loading Animation */
-        .loading-dots span {
-            animation: bounce 0.6s infinite alternate;
-            color: var(--loading-dots);
-        }
-
-        .loading-text {
-            color: var(--loading-text);
-            font-size: 14px;
-            margin-left: 8px;
-        }
-
-        /* Animations */
-        @keyframes fadeInMessage {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes bounce {
-            from { transform: translateY(0); }
-            to { transform: translateY(-8px); }
-        }
-
-        .blinking-cursor {
-            font-weight: 300;
-            animation: blink 1s step-end infinite;
-            border-right: 2px solid var(--text-color);
-        }
-
-        @keyframes blink {
-            from, to { border-right-color: transparent }
-            50% { border-right-color: var(--text-color); }
-        }
-
-        /* Text Formatting */
-        .highlight {
-            background-color: var(--highlight-bg);
-            color: var(--highlight-text);
-            font-weight: bold;
-            padding: 2px 4px;
-            border-radius: 4px;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .main-container {
-                height: 100vh;
-                border-radius: 0;
-                border: none;
-            }
-            
-            .header {
-                padding: 12px 16px;
-            }
-            
-            .logo {
-                font-size: 22px;
-            }
-            
-            .chat-area {
-                padding: 16px;
-            }
-            
-            .message-bubble {
-                max-width: 90%;
-                font-size: 16px;
-                padding: 10px 14px;
-            }
-            
-            .input-area {
-                padding: 12px 16px;
-            }
-            
-            #userInput {
-                font-size: 16px; /* Prevent zoom on iOS */
-            }
-        }
-
-        @media (max-width: 425px) {
-            .header {
-                padding: 10px 12px;
-            }
-            
-            .chat-area {
-                padding: 12px;
-            }
-            
-            .input-area {
-                padding: 10px 12px;
-            }
-            
-            .message-bubble {
-                max-width: 95%;
-            }
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="main-container">
-        <!-- Sticky Header -->
-        <header class="header">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                    <div class="logo">
-                        Shubham <span class="gpt-text">GPT</span>
-                    </div>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18V5l12-2v13"></path>
+                        <circle cx="6" cy="18" r="3"></circle>
+                        <circle cx="18" cy="16" r="3"></circle>
+                    </svg>
                 </div>
-                <button id="themeToggleBtn" class="theme-toggle">
-                    🌙 Dark
+                <h1>StreamVibe</h1>
+            </div>
+
+            <div class="search-container">
+                <div class="search-box">
+                    <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <input type="text" id="searchInput" placeholder="Search tracks..." />
+                </div>
+            </div>
+
+            <div class="mode-toggle">
+                <button id="modeToggle" class="mode-btn">
+                    <svg class="mode-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18V5l12-2v13"></path>
+                        <circle cx="6" cy="18" r="3"></circle>
+                        <circle cx="18" cy="16" r="3"></circle>
+                    </svg>
+                    <span class="mode-text">Audio Mode</span>
                 </button>
             </div>
-        </header>
-
-        <!-- Scrollable Chat Area -->
-        <div id="chatHistory" class="chat-area">
-            <!-- Messages will be added here by JavaScript -->
         </div>
+    </header>
 
-        <!-- Loading Indicator -->
-        <div id="loadingIndicator" class="hidden flex items-center justify-center py-4">
-            <div class="loading-dots text-2xl">
-                <span>.</span><span>.</span><span>.</span>
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="playlist-container">
+            <div class="playlist-header">
+                <h2>Playlist</h2>
+                <p id="trackCount">21 tracks</p>
             </div>
-            <span class="loading-text">Shubham GPT is typing...</span>
+            <div class="playlist" id="playlist">
+                <!-- Tracks will be dynamically loaded here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom Player -->
+    <div class="bottom-player" id="bottomPlayer">
+        <div class="player-info">
+            <div class="track-thumbnail">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18V5l12-2v13"></path>
+                    <circle cx="6" cy="18" r="3"></circle>
+                    <circle cx="18" cy="16" r="3"></circle>
+                </svg>
+            </div>
+            <div class="track-details">
+                <div class="track-title" id="currentTitle">Select a track</div>
+                <div class="track-artist" id="currentArtist">No track selected</div>
+            </div>
         </div>
 
-        <!-- Sticky Input Bar -->
-        <div class="input-area">
-            <div class="flex gap-3 items-end">
-                <textarea
-                    id="userInput"
-                    rows="1"
-                    class="flex-1"
-                    placeholder="Ask Shubham GPT anything..."
-                    oninput='this.style.height = "";this.style.height = Math.min(this.scrollHeight, 120) + "px"'
-                ></textarea>
-                <div class="button-container">
-                    <button id="sendButton" class="action-button" title="Send message">
-                        <span class="material-icons">send</span>
-                    </button>
-                    <button id="stopButton" class="action-button stop-style hidden" title="Stop response">
-                        <span class="material-icons">stop_circle</span>
-                    </button>
+        <div class="player-controls">
+            <button class="control-btn" id="prevBtn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="19,20 9,12 19,4"></polygon>
+                    <line x1="5" y1="19" x2="5" y2="5"></line>
+                </svg>
+            </button>
+            <button class="play-btn" id="playBtn">
+                <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="5,3 19,12 5,21"></polygon>
+                </svg>
+                <svg class="pause-icon hidden" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="6" y="4" width="4" height="16"></rect>
+                    <rect x="14" y="4" width="4" height="16"></rect>
+                </svg>
+            </button>
+            <button class="control-btn" id="nextBtn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="5,4 15,12 5,20"></polygon>
+                    <line x1="19" y1="5" x2="19" y2="19"></line>
+                </svg>
+            </button>
+        </div>
+
+        <div class="player-extras">
+            <button class="fullscreen-btn" id="fullscreenBtn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Fullscreen Player -->
+    <div class="fullscreen-player hidden" id="fullscreenPlayer">
+        <div class="fullscreen-header">
+            <button class="close-btn" id="closeBtn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+
+        <div class="fullscreen-content">
+            <div class="video-container" id="videoContainer">
+                <iframe id="videoPlayer" frameborder="0" allowfullscreen></iframe>
+            </div>
+            
+            <div class="audio-visualizer" id="audioVisualizer">
+                <div class="vinyl-record">
+                    <div class="vinyl-center"></div>
                 </div>
+                <div class="track-info-large">
+                    <h2 id="fullscreenTitle">Track Title</h2>
+                    <p id="fullscreenArtist">Artist Name</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="fullscreen-controls">
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="time-info">
+                    <span id="currentTime">0:00</span>
+                    <span id="totalTime">0:00</span>
+                </div>
+            </div>
+
+            <div class="control-buttons">
+                <button class="fs-control-btn" id="fsPrevBtn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="19,20 9,12 19,4"></polygon>
+                        <line x1="5" y1="19" x2="5" y2="5"></line>
+                    </svg>
+                </button>
+                <button class="fs-play-btn" id="fsPlayBtn">
+                    <svg class="play-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="5,3 19,12 5,21"></polygon>
+                    </svg>
+                    <svg class="pause-icon hidden" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="6" y="4" width="4" height="16"></rect>
+                        <rect x="14" y="4" width="4" height="16"></rect>
+                    </svg>
+                </button>
+                <button class="fs-control-btn" id="fsNextBtn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="5,4 15,12 5,20"></polygon>
+                        <line x1="19" y1="5" x2="19" y2="19"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="volume-control">
+                <svg class="volume-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"></polygon>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                </svg>
+                <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="70">
             </div>
         </div>
     </div>
 
-    <script type="module">
-        // Get references to HTML elements
-        const userInput = document.getElementById('userInput');
-        const sendButton = document.getElementById('sendButton');
-        const stopButton = document.getElementById('stopButton');
-        const themeToggleBtn = document.getElementById('themeToggleBtn');
-        const chatHistoryDiv = document.getElementById('chatHistory');
-        const loadingIndicator = document.getElementById('loadingIndicator');
-
-        // Store chat history in an array
-        let chatHistory = [];
-        let abortController = null;
-        let isDarkMode = false;
-        let isResponding = false;
-
-        // HARDCODED API KEY FOR IMMEDIATE FIX
-        const API_KEY = "AIzaSyDRp4pUWF7PJ-olOWnDu76v-S1HO3FvxGM";
-
-        // Function to swap between send and stop buttons
-        const showSendButton = () => {
-            sendButton.classList.remove('hidden');
-            stopButton.classList.add('hidden');
-            isResponding = false;
-        };
-
-        const showStopButton = () => {
-            sendButton.classList.add('hidden');
-            stopButton.classList.remove('hidden');
-            isResponding = true;
-        };
-
-        // Function to apply real-time formatting during typing
-        function applyRealtimeFormatting(text) {
-            // Convert ***text*** to highlight
-            text = text.replace(/\*\*\*(.*?)\*\*\*/g, '<span class="highlight">$1</span>');
-            // Convert **text** to bold
-            text = text.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
-            // Convert * text to bullet points
-            text = text.replace(/^\* (.*?)$/gm, '• $1');
-            // Convert newlines to <br>
-            text = text.replace(/\n/g, '<br>');
-            return text;
-        }
-
-        // Enhanced typing effect with real-time formatting
-        const typeText = (element, text, delay = 20) => {
-            return new Promise(resolve => {
-                let i = 0;
-                const cursorSpan = document.createElement('span');
-                cursorSpan.className = 'blinking-cursor';
-                element.appendChild(cursorSpan);
-
-                const interval = setInterval(() => {
-                    if (abortController && abortController.signal.aborted) {
-                        clearInterval(interval);
-                        cursorSpan.remove();
-                        // Apply formatting to current content
-                        const currentText = text.substring(0, i);
-                        element.innerHTML = applyRealtimeFormatting(currentText);
-                        resolve();
-                        return;
-                    }
-
-                    if (i < text.length) {
-                        // Get current text and apply formatting
-                        const currentText = text.substring(0, i + 1);
-                        const beforeCursor = element.querySelector('.blinking-cursor');
-                        element.removeChild(beforeCursor);
-                        element.innerHTML = applyRealtimeFormatting(currentText);
-                        element.appendChild(cursorSpan);
-                        i++;
-                        chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight;
-                    } else {
-                        clearInterval(interval);
-                        cursorSpan.remove();
-                        // Final formatting
-                        element.innerHTML = applyRealtimeFormatting(text);
-                        resolve();
-                    }
-                }, delay);
-            });
-        };
-
-        // Function to add messages to chat history display
-        const addMessageToChat = async (sender, rawMessage) => {
-            const messageWrapper = document.createElement('div');
-            messageWrapper.className = `message-bubble ${sender === 'user' ? 'user-message' : 'bot-message'}`;
-            chatHistoryDiv.appendChild(messageWrapper);
-            chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight;
-
-            if (sender === 'bot') {
-                await typeText(messageWrapper, rawMessage);
-            } else {
-                messageWrapper.textContent = rawMessage;
-                messageWrapper.style.opacity = 1;
-                messageWrapper.style.transform = 'translateY(0)';
-            }
-        };
-
-        // Function to render all messages from chatHistory array
-        const renderChatHistory = async () => {
-            chatHistoryDiv.innerHTML = '';
-            await addMessageToChat('bot', 'Hello! 👋 How can I help you today?');
-
-            for (const chat of chatHistory) {
-                const userMsgWrapper = document.createElement('div');
-                userMsgWrapper.className = `message-bubble user-message`;
-                userMsgWrapper.textContent = chat.user;
-                chatHistoryDiv.appendChild(userMsgWrapper);
-                userMsgWrapper.style.opacity = 1;
-                userMsgWrapper.style.transform = 'translateY(0)';
-
-                const botMsgWrapper = document.createElement('div');
-                botMsgWrapper.className = `message-bubble bot-message`;
-                botMsgWrapper.innerHTML = chat.botFormatted;
-                chatHistoryDiv.appendChild(botMsgWrapper);
-                botMsgWrapper.style.opacity = 1;
-                botMsgWrapper.style.transform = 'translateY(0)';
-            }
-            chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight;
-        };
-
-        // Event listener for the send button
-        sendButton.addEventListener('click', async () => {
-            if (isResponding) return; // Prevent multiple requests
-            
-            const prompt = userInput.value.trim();
-            if (!prompt) {
-                await addMessageToChat('bot', 'Please enter your question before submitting.');
-                return;
-            }
-
-            await addMessageToChat('user', prompt);
-            userInput.value = '';
-            userInput.style.height = '';
-
-            // Immediately swap to stop button
-            showStopButton();
-            loadingIndicator.classList.remove('hidden');
-
-            abortController = new AbortController();
-            const signal = abortController.signal;
-
-            try {
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
-                const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
-
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload),
-                    signal: signal
-                });
-
-                const result = await response.json();
-                let botRawResponseText = 'Sorry, I couldn\'t generate a response. Please try again.';
-
-                if (result.candidates && result.candidates.length > 0 &&
-                    result.candidates[0].content && result.candidates[0].content.parts &&
-                    result.candidates[0].content.parts.length > 0) {
-                    botRawResponseText = result.candidates[0].content.parts[0].text;
-                } else if (response.status === 429) {
-                     botRawResponseText = 'Too many requests. Please wait a moment and try again.';
-                } else if (!signal.aborted) {
-                    console.error('Unexpected API response structure:', result);
-                }
-
-                if (!signal.aborted) {
-                    await addMessageToChat('bot', botRawResponseText);
-                    chatHistory.push({ user: prompt, botRaw: botRawResponseText, botFormatted: applyRealtimeFormatting(botRawResponseText) });
-                }
-
-            } catch (error) {
-                if (error.name === 'AbortError') {
-                    console.log('Fetch aborted by user.');
-                    await addMessageToChat('bot', 'Response stopped.');
-                } else {
-                    const errorMessage = `An error occurred: ${error.message}. Please check your internet connection and try again.`;
-                    await addMessageToChat('bot', errorMessage);
-                    console.error('Error fetching from Gemini API:', error);
-                }
-            } finally {
-                loadingIndicator.classList.add('hidden');
-                showSendButton(); // Always return to send button
-                abortController = null;
-                chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight;
-            }
-        });
-
-        // Event listener for the stop button
-        stopButton.addEventListener('click', () => {
-            if (abortController) {
-                abortController.abort();
-                console.log('API request aborted.');
-                loadingIndicator.classList.add('hidden');
-                showSendButton(); // Return to send button
-            }
-        });
-
-        // Theme Toggle Logic
-        themeToggleBtn.addEventListener('click', () => {
-            isDarkMode = !isDarkMode;
-            if (isDarkMode) {
-                document.body.classList.add('dark-mode');
-                themeToggleBtn.textContent = '☀️ Light';
-            } else {
-                document.body.classList.remove('dark-mode');
-                themeToggleBtn.textContent = '🌙 Dark';
-            }
-        });
-
-        // Enter key handling
-        userInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                if (!isResponding) { // Only send if not currently responding
-                    sendButton.click();
-                }
-            }
-        });
-
-        // Initial render
-        document.addEventListener('DOMContentLoaded', renderChatHistory);
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
