@@ -152,7 +152,7 @@ const tracks = [
 // Global state
 let currentTrack = null;
 let isPlaying = false;
-let isVideoMode = false;
+let isVideoMode = false; // Initial mode is audio
 let filteredTracks = [...tracks];
 let currentTrackIndex = -1;
 let progressInterval = null;
@@ -291,17 +291,25 @@ function renderPlaylist() {
 function selectTrack(track) {
     currentTrack = track;
     currentTrackIndex = filteredTracks.findIndex(t => t.id === track.id);
-    isPlaying = true;
+    isPlaying = true; // Assume playing when a new track is selected
 
     updateBottomPlayer();
     updateFullscreenPlayer();
     renderPlaylist();
     showBottomPlayer();
-    openFullscreen();
+    openFullscreen(); // Open fullscreen immediately on track selection
 
     if (playerReady) {
+        // Always load the video, regardless of current mode.
+        // Its visibility will be controlled by updateFullscreenPlayer and toggleMode.
         player.loadVideoById(currentTrack.embedUrl);
-        player.playVideo();
+        // If in video mode, play immediately. Otherwise, it will be cued.
+        if (isVideoMode) {
+            player.playVideo();
+        } else {
+            // If in audio mode, ensure video is paused/stopped but loaded
+            player.pauseVideo();
+        }
     }
 }
 
@@ -372,10 +380,13 @@ function hideBottomPlayer() {
 function openFullscreen() {
     fullscreenPlayer.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
-    // Ensure the player is loaded and playing if in video mode
-    if (isVideoMode && currentTrack && playerReady) {
-        player.loadVideoById(currentTrack.embedUrl);
-        player.playVideo();
+    // Ensure the player state is correct when opening fullscreen
+    if (currentTrack && playerReady) {
+        if (isVideoMode) {
+            player.playVideo();
+        } else {
+            player.pauseVideo(); // Keep paused if in audio mode
+        }
     }
 }
 
@@ -385,6 +396,7 @@ function closeFullscreen() {
     if (playerReady) {
         player.stopVideo(); // Stop the video when closing fullscreen
     }
+    stopProgress(); // Stop progress update when closing fullscreen
 }
 
 // Play/pause functionality
@@ -396,9 +408,7 @@ function togglePlayPause() {
     } else {
         player.playVideo();
     }
-    isPlaying = !isPlaying; // This will be updated by onPlayerStateChange as well
-    updatePlayButton();
-    updateFullscreenPlayButton();
+    // isPlaying state will be updated by onPlayerStateChange
 }
 
 // Navigation
@@ -496,12 +506,12 @@ function toggleMode() {
     }
 
     if (currentTrack) {
-        updateFullscreenPlayer();
+        updateFullscreenPlayer(); // Update display based on new mode
         if (playerReady) {
             if (isVideoMode) {
-                player.playVideo(); // If switching to video mode, ensure playback
+                player.playVideo(); // If switching to video mode, play the video
             } else {
-                player.pauseVideo(); // If switching to audio mode, pause video
+                player.pauseVideo(); // If switching to audio mode, pause the video
             }
         }
     }
