@@ -152,7 +152,8 @@ const tracks = [
 // Global state
 let currentTrack = null;
 let isPlaying = false;
-let isVideoMode = false;
+// isVideoMode is always true now
+let isVideoMode = true; 
 let filteredTracks = [...tracks];
 let currentTrackIndex = -1;
 let progressInterval = null;
@@ -161,7 +162,7 @@ let currentProgress = 0;
 // DOM elements
 const playlist = document.getElementById('playlist');
 const searchInput = document.getElementById('searchInput');
-const modeToggle = document.getElementById('modeToggle');
+// Removed modeToggle as it's no longer needed
 const bottomPlayer = document.getElementById('bottomPlayer');
 const fullscreenPlayer = document.getElementById('fullscreenPlayer');
 const trackCount = document.getElementById('trackCount');
@@ -194,6 +195,8 @@ function init() {
     renderPlaylist();
     setupEventListeners();
     updateTrackCount();
+    // Ensure video mode is active on load
+    updateFullscreenPlayer(); 
 }
 
 // Render playlist
@@ -253,15 +256,10 @@ function updateFullscreenPlayer() {
         fullscreenArtist.textContent = currentTrack.artist;
         totalTime.textContent = currentTrack.duration;
         
-        if (isVideoMode) {
-            videoContainer.style.display = 'block';
-            audioVisualizer.style.display = 'none';
-            videoPlayer.src = currentTrack.embedUrl + '?autoplay=1&controls=1';
-        } else {
-            videoContainer.style.display = 'none';
-            audioVisualizer.style.display = 'block';
-            videoPlayer.src = '';
-        }
+        // Always display video container and hide audio visualizer
+        videoContainer.style.display = 'block';
+        audioVisualizer.style.display = 'none';
+        videoPlayer.src = currentTrack.embedUrl + '?autoplay=1&controls=1';
         
         updateFullscreenPlayButton();
     }
@@ -383,7 +381,8 @@ function handleSearch() {
     updateTrackCount();
 }
 
-// Mode toggle
+// Removed mode toggle function as it's no longer needed
+/*
 function toggleMode() {
     isVideoMode = !isVideoMode;
     const modeIcon = modeToggle.querySelector('.mode-icon');
@@ -411,6 +410,7 @@ function toggleMode() {
         updateFullscreenPlayer();
     }
 }
+*/
 
 // Update track count
 function updateTrackCount() {
@@ -422,8 +422,8 @@ function setupEventListeners() {
     // Search
     searchInput.addEventListener('input', handleSearch);
     
-    // Mode toggle
-    modeToggle.addEventListener('click', toggleMode);
+    // Removed mode toggle event listener
+    // modeToggle.addEventListener('click', toggleMode);
     
     // Bottom player controls
     playBtn.addEventListener('click', togglePlayPause);
